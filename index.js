@@ -107,6 +107,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/enquireOrder', function(req, res) {
+  console.log('Testing this is my app')
     var speech
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent";
