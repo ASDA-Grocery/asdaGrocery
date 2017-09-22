@@ -207,8 +207,14 @@ app.post('/enquireOrder', function(req, res) {
         
         console.log('OrderCost: ', orderCost)
         if(orderCost.indexOf('£') == 0){
-          orderCost =  orderCost.substr(2, orderCost.length)
-          orderCost = orderCost + ' £'
+          if(orderCost.substr(0,1) === ' '){
+            orderCost =  orderCost.substr(2, orderCost.length)
+            orderCost = orderCost + ' £'
+          }
+          else{
+            orderCost =  orderCost.substr(1, orderCost.length)
+            orderCost = orderCost + ' £'
+          }          
         }
         
         for(var i = 0; i < orderDb.length; i++){
