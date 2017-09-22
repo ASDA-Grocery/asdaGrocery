@@ -186,6 +186,7 @@ app.post('/enquireOrder', function(req, res) {
     }
     else if(intent === 'orderCost-status'){
       var orderCost = req.body.result.parameters.orderCost ? req.body.result.parameters.orderCost : 'noOrderCost'
+      console.log('OrderCost 1 :', orderCost);
       if(orderCost === 'noOrderCost'){
         speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
       }
