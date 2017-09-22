@@ -184,13 +184,30 @@ app.post('/enquireOrder', function(req, res) {
         }
       }
     }
-  else if(intent === 'orderCost-status'){
+    else if(intent === 'orderCost-status'){
       var orderCost = req.body.result.parameters.orderCost ? req.body.result.parameters.orderCost : 'noOrderCost'
       if(orderCost === 'noOrderCost'){
         speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
       }
       else{
         var orderCounter = 0;
+        var result;
+        if(orderCost.indexOf('pounds') !== -1)
+        {
+          console.log('pounds');
+          result = orderCost.replace("pounds", "£");
+        }
+        else if(val.indexOf('pound') !== -1 ){
+          console.log('pound');
+          result = orderCost.replace("pound", "£");
+        }
+        orderCost = result;
+
+        if(orderCost.indexOf('£') == 0){
+          orderCost =  orderCost.substr(2, orderCost.length)
+          orderCost = orderCost + ' £'
+        }
+        
         for(var i = 0; i < orderDb.length; i++){
           if(orderDb[i].value === orderCost){
             var deliveryTimeRem = (orderDb[i].deliveryTime - new Date())/60000;
