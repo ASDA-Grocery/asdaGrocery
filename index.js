@@ -197,12 +197,14 @@ app.post('/enquireOrder', function(req, res) {
         {
           console.log('pounds');
           result = orderCost.replace("pounds", "£");
+          orderCost = result;
         }
         else if(orderCost.indexOf('pound') !== -1 ){
           console.log('pound');
           result = orderCost.replace("pound", "£");
+          orderCost = result;
         }
-        orderCost = result;
+        
         console.log('OrderCost: ', orderCost)
         if(orderCost.indexOf('£') == 0){
           orderCost =  orderCost.substr(2, orderCost.length)
