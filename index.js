@@ -197,7 +197,7 @@ app.post('/enquireOrder', function(req, res) {
           console.log('pounds');
           result = orderCost.replace("pounds", "£");
         }
-        else if(val.indexOf('pound') !== -1 ){
+        else if(orderCost.indexOf('pound') !== -1 ){
           console.log('pound');
           result = orderCost.replace("pound", "£");
         }
