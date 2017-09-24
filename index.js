@@ -140,7 +140,7 @@ app.post('/enquireOrder', function(req, res) {
             tempCount++;
           }
         })
-        speech = speech + ' Which one do you want?'
+        speech = speech + ' Which one should I check?'
       }
     }
     else if(intent === 'orderNo-status'){
