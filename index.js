@@ -213,6 +213,7 @@ app.post('/enquireOrder', function(req, res) {
         
         for(var i = 0; i < orderDb.length; i++){
           if(orderDb[i].value === orderCost){
+            console.log('index :', i, ' orderdb.value :', orderDb[i].value, ' orderDb.time :', orderDb[i].time);
             var deliveryTimeRem = (orderDb[i].deliveryTime - new Date())/60000;
             speech = 'It has left our store and will reach you in the next '
                       + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
