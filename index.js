@@ -5,201 +5,8 @@ const bodyParser = require('body-parser');
 const { wordsToNumbers } = require('words-to-numbers');
 const app = express();
 
-function getOrderTime(diff){
-  var currentDate = new Date()
-  currentDate.setTime(currentDate.getTime() + (diff*60000));
-  return currentDate;
-}
-
-var shoppingList = {
-
-  daily: {
-    productList: [
-      {
-        productId: 'PR100003',
-        productName: 'product3',
-        quantity: '3'
-      }
-    ],
-    status: 'resume'
-  },
-
-  weekly: {
-    productList: [
-      {
-        productId: 'PR100034',
-        productName: 'product34',
-        quantity: '3'
-      },
-      {
-        productId: 'PR100035',
-        productName: 'product35',
-        quantity: '4'
-      },
-      {
-        productId: 'PR100036',
-        productName: 'product36',
-        quantity: '1'
-      }
-    ],
-    status: 'resume'
-  },
-
-  monthly: {
-    productList: [
-      {
-        productId: 'PR100030',
-        productName: 'product30',
-        quantity: '8'
-      },
-      {
-        productId: 'PR100031',
-        productName: 'product31',
-        quantity: '3'
-      },
-      {
-        productId: 'PR100039',
-        productName: 'product39',
-        quantity: '12'
-      },
-      {
-        productId: 'PR100013',
-        productName: 'product13',
-        quantity: '7'
-      }
-    ],
-    status: 'resume'
-  },
-
-  yearly: {
-    productList: [
-      {
-        productId: 'PR100030',
-        productName: 'product30',
-        quantity: '8'
-      },
-      {
-        productId: 'PR100031',
-        productName: 'product31',
-        quantity: '3'
-      },
-      {
-        productId: 'PR100039',
-        productName: 'product39',
-        quantity: '12'
-      },
-      {
-        productId: 'PR100013',
-        productName: 'product13',
-        quantity: '7'
-      },
-      {
-        productId: 'PR100034',
-        productName: 'product34',
-        quantity: '3'
-      },
-      {
-        productId: 'PR100035',
-        productName: 'product35',
-        quantity: '4'
-      },
-      {
-        productId: 'PR100036',
-        productName: 'product36',
-        quantity: '1'
-      }
-    ],
-    status: 'resume'
-  }
-}
-
-var orderDb = [
-  {
-    orderId: 'OR100001',
-    productList: [
-      {
-        productId: 'PR100001',
-        productName: 'product1',
-        quantity: '2'
-      }
-    ],
-    orderPlacementDate: 'June 23, 2017',
-    value: '20 £',
-    status: 'closed',
-    deliveryTime: getOrderTime(30)
-  },
-  {
-    orderId: 'OR100002',
-    productList: [
-      {
-        productId: 'PR100001',
-        productName: 'product1',
-        quantity: '2'
-      },
-      {
-        productId: 'PR100004',
-        productName: 'product4',
-        quantity: '1'
-      }
-    ],
-    orderPlacementDate: 'July 2, 2017',
-    value: '35 £',
-    status: 'closed',
-    deliveryTime: getOrderTime(40)
-  },
-  {
-    orderId: 'OR100003',
-    productList: [
-      {
-        productId: 'PR100002',
-        productName: 'product2',
-        quantity: '3'
-      }
-    ],
-    orderPlacementDate: 'August 15, 2017',
-    value: '15 £',
-    status: 'closed',
-    deliveryTime: getOrderTime(25)
-  },
-  {
-    orderId: 'OR100004',
-    productList: [
-      {
-        productId: 'PR100001',
-        productName: 'product1',
-        quantity: '4'
-      }
-    ],
-    orderPlacementDate: 'September 2, 2017',
-    value: '40 £',
-    status: 'open',
-    deliveryTime: getOrderTime(30)
-  },
-  {
-    orderId: 'OR100005',
-    productList: [
-      {
-        productId: 'PR100001',
-        productName: 'product1',
-        quantity: '2'
-      },
-      {
-        productId: 'PR100002',
-        productName: 'product2',
-        quantity: '3'
-      },
-      {
-        productId: 'PR100003',
-        productName: 'product3',
-        quantity: '5'
-      }
-    ],
-    orderPlacementDate: 'September 12, 2017',
-    value: '90 £',
-    status: 'open',
-    deliveryTime: getOrderTime(50)
-  }
-]
+var orderData = require('./orderDb.js');
+var shoppingData = require('./shoppingList.js');
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -220,7 +27,7 @@ app.post('/enquireOrder', function(req, res) {
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent";
     if(intent === 'checkOrderStatus'){
-      orderDb.forEach(function(element){
+      orderData.orderDb.forEach(function(element){
         if(element.status === 'open'){
           openCounter ++;
         }
@@ -229,7 +36,7 @@ app.post('/enquireOrder', function(req, res) {
         speech = 'You have no open orders. Anything else I can help you with?'
       }
       else if(openCounter == 1){
-        orderDb.forEach(function(element){
+        orderData.orderDb.forEach(function(element){
           if(element.status === 'open'){
             var deliveryTimeRem = (element.deliveryTime - new Date())/60000;
             speech = 'It has left our store and will reach you in the next '
@@ -240,7 +47,7 @@ app.post('/enquireOrder', function(req, res) {
       else{
         speech = 'You have ' + openCounter + ' open orders.'
         var tempCount = 1;
-        orderDb.forEach(function(element){
+        orderData.orderDb.forEach(function(element){
           if(element.status === 'open'){
             speech = speech + ' Order ' + tempCount + ' is for ' + element.value 
                      + ' and it was placed on ' + element.orderPlacementDate + '.'                      
@@ -257,11 +64,11 @@ app.post('/enquireOrder', function(req, res) {
       }
       else{
         var orderCounter = 0;
-        for(var i = 0; i < orderDb.length; i++){
-          if(orderDb[i].status === 'open'){
+        for(var i = 0; i < orderData.orderDb.length; i++){
+          if(orderData.orderDb[i].status === 'open'){
             orderCounter++;
             if(orderCounter == orderNo){
-              var deliveryTimeRem = (orderDb[i].deliveryTime - new Date())/60000;
+              var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
               speech = 'It has left our store and will reach you in the next '
                         + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
               break;
@@ -277,12 +84,12 @@ app.post('/enquireOrder', function(req, res) {
         speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
       }
       else{
-        for(var i = 0; i < orderDb.length; i++){
-          var tempOrderPlacementDate = orderDb[i].orderPlacementDate.toLowerCase()
+        for(var i = 0; i < orderData.orderDb.length; i++){
+          var tempOrderPlacementDate = orderData.orderDb[i].orderPlacementDate.toLowerCase()
           var tempOrderDateDay = orderDateDay.toLowerCase()
           var tempOrderDateMonth = orderDateMonth.toLowerCase()
           if((tempOrderPlacementDate.indexOf(tempOrderDateDay) !== -1) && (tempOrderPlacementDate.indexOf(tempOrderDateMonth) !== -1)){
-            var deliveryTimeRem = (orderDb[i].deliveryTime - new Date())/60000;
+            var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
             speech = 'It has left our store and will reach you in the next '
                       + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
             break;
@@ -313,9 +120,9 @@ app.post('/enquireOrder', function(req, res) {
           orderCost = orderCost + ' £'         
         }
         
-        for(var i = 0; i < orderDb.length; i++){
+        for(var i = 0; i < orderData.orderDb.length; i++){
           if(orderDb[i].value === orderCost){
-            var deliveryTimeRem = (orderDb[i].deliveryTime - new Date())/60000;
+            var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
             speech = 'It has left our store and will reach you in the next '
                       + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
             break;
@@ -336,12 +143,12 @@ app.post('/enquireOrder', function(req, res) {
         }
         else{
           if(shoppingStatus === 'hold' ||shoppingStatus === 'pause' || shoppingStatus === 'stop'){
-            shoppingList[shoppingListName].status = 'hold'
+            shoppingData.shoppingList[shoppingListName].status = 'hold'
             var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
             speech = "Sure. '" + tempList +  "' shopping list has been put on hold."
           }
           else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart'){
-            shoppingList[shoppingListName].status = 'resume'
+            shoppingData.shoppingList[shoppingListName].status = 'resume'
             var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
             speech = "Sure. '" + tempList +  "' shopping list has been put on resume."
           }
