@@ -11,8 +11,109 @@ function getOrderTime(diff){
   return currentDate;
 }
 
+var shoppingList = {
 
-const orderDb = [
+  daily: {
+    productList: [
+      {
+        productId: 'PR100003',
+        productName: 'product3',
+        quantity: '3'
+      }
+    ],
+    status: 'resume'
+  },
+
+  weekly: {
+    productList: [
+      {
+        productId: 'PR100034',
+        productName: 'product34',
+        quantity: '3'
+      },
+      {
+        productId: 'PR100035',
+        productName: 'product35',
+        quantity: '4'
+      },
+      {
+        productId: 'PR100036',
+        productName: 'product36',
+        quantity: '1'
+      }
+    ],
+    status: 'resume'
+  },
+
+  monthly: {
+    productList: [
+      {
+        productId: 'PR100030',
+        productName: 'product30',
+        quantity: '8'
+      },
+      {
+        productId: 'PR100031',
+        productName: 'product31',
+        quantity: '3'
+      },
+      {
+        productId: 'PR100039',
+        productName: 'product39',
+        quantity: '12'
+      },
+      {
+        productId: 'PR100013',
+        productName: 'product13',
+        quantity: '7'
+      }
+    ],
+    status: 'resume'
+  },
+
+  yearly: {
+    productList: [
+      {
+        productId: 'PR100030',
+        productName: 'product30',
+        quantity: '8'
+      },
+      {
+        productId: 'PR100031',
+        productName: 'product31',
+        quantity: '3'
+      },
+      {
+        productId: 'PR100039',
+        productName: 'product39',
+        quantity: '12'
+      },
+      {
+        productId: 'PR100013',
+        productName: 'product13',
+        quantity: '7'
+      },
+      {
+        productId: 'PR100034',
+        productName: 'product34',
+        quantity: '3'
+      },
+      {
+        productId: 'PR100035',
+        productName: 'product35',
+        quantity: '4'
+      },
+      {
+        productId: 'PR100036',
+        productName: 'product36',
+        quantity: '1'
+      }
+    ],
+    status: 'resume'
+  }
+}
+
+var orderDb = [
   {
     orderId: 'OR100001',
     productList: [
@@ -106,14 +207,12 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get('/authentication', (req, res)=>{
-  var token = req.data.user.accessToken;
-  console.log('token vanthuruchu! - > ',token)
-});
+// app.get('/authentication', (req, res)=>{
+//   var token = req.data.user.accessToken;
+//   console.log('token vanthuruchu! - > ',token)
+// });
 
 app.post('/enquireOrder', function(req, res) {
-//   console.log('Testing this is my app')
-//   console.log('This is request : ', req);
    var token = req.data.user.accessToken;
   console.log('token vanthuruchu! - > ',token);
   
@@ -178,7 +277,6 @@ app.post('/enquireOrder', function(req, res) {
         speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
       }
       else{
-//         console.log('Inside else');
         for(var i = 0; i < orderDb.length; i++){
           var tempOrderPlacementDate = orderDb[i].orderPlacementDate.toLowerCase()
           var tempOrderDateDay = orderDateDay.toLowerCase()
@@ -194,7 +292,6 @@ app.post('/enquireOrder', function(req, res) {
     }
     else if(intent === 'orderCost-status'){
       var orderCost = req.body.result.parameters.orderCost ? req.body.result.parameters.orderCost : 'noOrderCost'
-//       console.log('OrderCost 1 :', orderCost);
       if(orderCost === 'noOrderCost'){
         speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
       }
@@ -203,17 +300,14 @@ app.post('/enquireOrder', function(req, res) {
         var result;
         if(orderCost.indexOf('pounds') !== -1)
         {
-//           console.log('pounds');
           result = orderCost.replace("pounds", "£");
           orderCost = result;
         }
         else if(orderCost.indexOf('pound') !== -1 ){
-//           console.log('pound');
           result = orderCost.replace("pound", "£");
           orderCost = result;
         }
         
-//         console.log('OrderCost: ', orderCost)
         if(orderCost.indexOf('£') == 0){
           orderCost =  orderCost.substr(2, orderCost.length)
           orderCost = orderCost + ' £'         
@@ -221,7 +315,6 @@ app.post('/enquireOrder', function(req, res) {
         
         for(var i = 0; i < orderDb.length; i++){
           if(orderDb[i].value === orderCost){
-//             console.log('index :', i, ' orderdb.value :', orderDb[i].value, ' orderDb.time :', orderDb[i].deliveryTime);
             var deliveryTimeRem = (orderDb[i].deliveryTime - new Date())/60000;
             speech = 'It has left our store and will reach you in the next '
                       + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
@@ -230,6 +323,35 @@ app.post('/enquireOrder', function(req, res) {
         }
       }
     }
+    
+    else if(intent === 'changeRecurringOrderStatus'){
+      var shoppingListName = 'weekly'
+      var shoppingStatus = 'hold'
+      if(shoppingListName === 'noShoppingListName'){
+        speech = 'Sorry! No such list exists. Something else I can help you with?'
+      }
+      else{
+        if(shoppingStatus === 'noShoppingStatus'){
+          speech = 'No a valid status. Please provide a valid status.'
+        }
+        else{
+          if(shoppingStatus === 'hold' ||shoppingStatus === 'pause' || shoppingStatus === 'stop'){
+            shoppingList[shoppingListName].status = 'hold'
+            var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
+            speech = "Sure. '" + tempList +  "' shopping list has been put on hold."
+          }
+          else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart'){
+            shoppingList[shoppingListName].status = 'resume'
+            var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
+            speech = "Sure. '" + tempList +  "' shopping list has been put on resume."
+          }
+          else{
+            speech = 'No a valid status. Please provide a valid status.'
+          }
+        }
+      }
+    }
+  
     else{
       speech = 'Sorry! Unable to Understand'
     }
