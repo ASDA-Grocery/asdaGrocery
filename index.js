@@ -107,7 +107,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.get('/authentication', (req, res)=>{
-  var token = req..data.user.accessToken;
+  var token = req.data.user.accessToken;
   console.log('token vanthuruchu! - > ',token)
 });
 
