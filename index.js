@@ -213,8 +213,8 @@ app.use(bodyParser.json());
 // });
 
 app.post('/enquireOrder', function(req, res) {
-   var token = req.data.user.accessToken;
-  console.log('token vanthuruchu! - > ',token);
+//    var token = req.data.user.accessToken;
+//   console.log('token vanthuruchu! - > ',token);
   
     var speech
       , openCounter = 0
