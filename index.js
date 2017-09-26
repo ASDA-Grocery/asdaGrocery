@@ -181,7 +181,34 @@ app.post('/enquireOrder', function(req, res) {
         speech = 'Sorry! Please provide proper Product Quantity and Shopping List Name'
       }
       else{
-        speech = "'Single quantity of Ainsley Harriott Sumdried Tomato & Garlic Cous 100 grams' added to the weekly list. Anything else I can help you with."
+        if(!(shoppingListName in shoppingData.shoppingList)){
+          speech = 'Please provide correct Shopping List Name'
+        }
+        else{
+          var productNameString = ''
+          for (var product in openNotificationsData.openNotifications) {
+            if (openNotificationsData.openNotifications.hasOwnProperty(product)) {
+              openNotificationsData.openNotifications[product].forEach(function(element){
+                var newProduct = {
+                  productId: element.productId,
+                  productName: element.productName,
+                  quantity: productQuantity
+                }
+                shoppingData.shoppingList[shoppingListName].productList.push(newProduct)
+                productNameString = productNameString + element.productName + ', ';
+              })
+            }
+          }
+          productNameString = productNameString.slice(0, -2);
+          var tempIndex = productNameString.lastIndexOf(',');
+          var newProductNameString = productNameString.substr(0, tempIndex) + ' &' + productNameString.substr(tempIndex+1, productNameString.length);
+          if(productQuantity == 1){
+            speech = "'Single' quantity of " + newProductNameString + " added to the weekly list. Anything else I can help you with?"
+          }
+          else{
+            speech = productQuantity + " quantity of " + newProductNameString + " added to the weekly list. Anything else I can help you with?"
+          }
+        }
       }
     }
     
