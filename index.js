@@ -1,11 +1,13 @@
 'use strict';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const { wordsToNumbers } = require('words-to-numbers');
-const app = express();
-var orderData = require('./orderDb.js');
-var shoppingData = require('./shoppingList.js');
+const express = require('express')
+    , bodyParser = require('body-parser')
+    , { wordsToNumbers } = require('words-to-numbers')
+    , app = express();
+
+var orderData = require('./orderDb.js')
+  , shoppingData = require('./shoppingList.js')
+  , openNotificationsData = require('./openNotifications.js');
 
 app.use(bodyParser.urlencoded({
     extended: true
