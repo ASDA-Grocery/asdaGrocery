@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 
 
 app.post('/enquireOrder', function(req, res) {  
-    var accessToken = req.body;
+    var accessToken = req.body.originalRequest.data.user.accessToken;
     console.log('access token - > ',accessToken);
     oauth2Client.credentials = accessToken;
     var speech
