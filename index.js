@@ -9,6 +9,14 @@ var orderData = require('./orderDb.js')
   , shoppingData = require('./shoppingList.js')
   , openNotificationsData = require('./openNotifications.js');
 
+const google = require('googleapis')
+    , calendar = google.calendar('v3')
+    , OAuth2 = google.auth.OAuth2
+    , clientId = '357369265143-8j0kor1bbl87h7houkt5qbt76r9keg5l.apps.googleusercontent.com'
+    , clientSecret = 'E047ajWFZ5MiobPR_7WRrvXx'
+    , redirect = 'https://oauth-redirect.googleusercontent.com/r/groceryapp-b4d9c'
+    , oauth2Client = new OAuth2(clientId, clientSecret, redirect);
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -17,6 +25,9 @@ app.use(bodyParser.json());
 
 
 app.post('/enquireOrder', function(req, res) {  
+    var accessToken = req.data.user.accessToken;
+    console.log('access token - > ',accessToken);
+    oauth2Client.credentials = accessToken;
     var speech
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent";
