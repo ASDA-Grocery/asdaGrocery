@@ -1,6 +1,6 @@
 exports.shoppingList = {
 
-  party: {
+  'party': {
     productList: [
       {
         productId: 'PR100003',
@@ -11,7 +11,7 @@ exports.shoppingList = {
     status: 'resume'
   },
 
-  weekly: {
+  'weekly': {
     productList: [
       {
         productId: 'PR100034',
@@ -32,7 +32,7 @@ exports.shoppingList = {
     status: 'resume'
   },
 
-  monthly: {
+  'monthly': {
     productList: [
       {
         productId: 'PR100030',
@@ -58,7 +58,7 @@ exports.shoppingList = {
     status: 'resume'
   },
 
-  family picnic: {
+  'family picnic': {
     productList: [
       {
         productId: 'PR100030',
