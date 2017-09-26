@@ -58,7 +58,7 @@ exports.shoppingList = {
     status: 'resume'
   },
 
-  family_picnic: {
+  family picnic: {
     productList: [
       {
         productId: 'PR100030',
