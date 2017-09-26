@@ -4,6 +4,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { wordsToNumbers } = require('words-to-numbers');
 const app = express();
+const google = require('googleapis')
+    , OAuth2Google = google.auth.OAuth2
+    , clientId = '357369265143-8j0kor1bbl87h7houkt5qbt76r9keg5l.apps.googleusercontent.com'
+    , clientSecret = 'E047ajWFZ5MiobPR_7WRrvXx'
+    , redirect = 'https://asda-grocery.herokuapp.com/oauth2callback'
+    , oauth2Client = new OAuth2Google(clientId, clientSecret, redirect);
 
 var orderData = require('./orderDb.js');
 var shoppingData = require('./shoppingList.js');
@@ -14,10 +20,16 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get('/authentication', (req, res)=>{
-  var token = req.data.user.accessToken;
-//   console.log('token vanthuruchu! - > ',token);
-    res.send('hello');
+var accessToken = '';    
+
+app.get('/oauth2callback', (req, res)=>{
+   var code = req.query.code;
+  console.log('code : ',code);
+  oauth2Client.getToken(code, function(err, gtoken){
+    let gToken = gtoken;
+    accessToken = gtoken.access_token;
+    console.log('Access Token - > ',accessToken);
+  });
 });
 
 app.post('/enquireOrder', function(req, res) {
