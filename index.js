@@ -142,7 +142,28 @@ app.post('/enquireOrder', function(req, res) {
           else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart'){
             shoppingData.shoppingList[shoppingListName].status = 'resume'
             var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
-            speech = "Sure. '" + tempList +  "' shopping list has been put on resume."
+            var randomNum = Math.floor((Math.random() * 20)/2);
+            //console.log('randomNum :',randomNum);
+            if(randomNum % 2 == 0){
+              console.log('Even');
+              var productNameString = ''
+              for (var product in openNotificationsData.openNotifications) {
+                if (openNotificationsData.openNotifications.hasOwnProperty(product)) {
+                  openNotificationsData.openNotifications[product].forEach(function(element){
+                    productNameString = productNameString + element.productName + ', ';
+                  })
+                }
+              }
+              productNameString = productNameString.slice(0, -2);
+              var tempIndex = productNameString.lastIndexOf(',');
+              var newProductNameString = productNameString.substr(0, tempIndex) + ' &' + productNameString.substr(tempIndex+1, productNameString.length);
+              speech = "Sure. '" + tempList +  "' shopping list has been put on resume. Also '" + newProductNameString
+                       + "' is back in stock. Would you like to add that to your weekly list?"
+            }
+            else{
+              console.log('Odd');
+              speech = "Sure. '" + tempList +  "' shopping list has been put on resume."
+            }
           }
           else{
             speech = 'No a valid status. Please provide a valid status.'
@@ -150,7 +171,18 @@ app.post('/enquireOrder', function(req, res) {
         }
       }
     }
-  
+    
+    else if(intent === 'updateShoppingList'){
+      var productQuantity = req.body.result.parameters.productQuantity ? parseInt(wordsToNumbers(req.body.result.parameters.productQuantity))  : 'noProductQuantity'
+      var shoppingListName = req.body.result.contexts.parameters.recurTime ? req.body.result.contexts.parameters.recurTime : 'noShoppingListName'
+      if(productQuantity === 'noProductQuantity' || shoppingListName === 'noShoppingListName'){
+        speech = 'Sorry! Please provide proper Product Quantity and Shopping List Name'
+      }
+      else{
+        speech = "'Single quantity of Ainsley Harriott Sumdried Tomato & Garlic Cous 100 grams' added to the weekly list. Anything else I can help you with."
+      }
+    }
+    
     else{
       speech = 'Sorry! Unable to Understand'
     }
