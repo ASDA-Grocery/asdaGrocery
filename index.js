@@ -223,6 +223,10 @@ app.post('/enquireOrder', function(req, res) {
       }
     }
     
+    else if(intent==='changeDeliveryDate'){
+        console.log('intent - > ', intent);
+    }
+    
     else{
       speech = 'Sorry! Unable to Understand'
     }
