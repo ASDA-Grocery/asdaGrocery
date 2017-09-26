@@ -16,7 +16,8 @@ app.use(bodyParser.json());
 
 app.get('/authentication', (req, res)=>{
   var token = req.data.user.accessToken;
-  console.log('token vanthuruchu! - > ',token)
+  console.log('token vanthuruchu! - > ',token);
+    res.send('hello');
 });
 
 app.post('/enquireOrder', function(req, res) {
@@ -168,7 +169,6 @@ app.post('/enquireOrder', function(req, res) {
         displayText: speech,
         source: 'webhook-asda-assistant'
     });
-    res.send('hello');
 });
 
 app.listen((process.env.PORT || 8000), function() {
