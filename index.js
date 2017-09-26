@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.get('/authentication', (req, res)=>{
   var token = req.data.user.accessToken;
-  console.log('token vanthuruchu! - > ',token);
+//   console.log('token vanthuruchu! - > ',token);
     res.send('hello');
 });
 
