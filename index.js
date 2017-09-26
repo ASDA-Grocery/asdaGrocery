@@ -153,7 +153,7 @@ app.post('/enquireOrder', function(req, res) {
             speech = "Sure. '" + tempList +  "' shopping list has been put on hold."
           }
           else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart'){
-            shoppingData.shoppingList[shoppingListName].status = 'resume'
+            shoppingData.shoppingList[shoppingListName].status = 'active'
             var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
             var randomNum = Math.floor((Math.random() * 20)/2);
             //console.log('randomNum :',randomNum);
