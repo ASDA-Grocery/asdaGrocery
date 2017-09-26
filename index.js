@@ -168,6 +168,7 @@ app.post('/enquireOrder', function(req, res) {
         displayText: speech,
         source: 'webhook-asda-assistant'
     });
+    res.send('hello');
 });
 
 app.listen((process.env.PORT || 8000), function() {
