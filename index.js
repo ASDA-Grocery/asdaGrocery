@@ -139,6 +139,11 @@ app.post('/enquireOrder', function(req, res) {
     else if(intent === 'changeRecurringOrderStatus'){
       var shoppingListName = req.body.result.parameters.recurTime ? req.body.result.parameters.recurTime : 'noShoppingListName'
       var shoppingStatus = req.body.result.parameters.recurStatus ? req.body.result.parameters.recurStatus : 'noShoppingStatus'
+      if(typeof shoppingListName === 'object'){
+        console.log('Shopping list name came as object')
+        var tempName = shoppingListName[0]
+        shoppingListName = tempName
+      }
       if(shoppingListName === 'noShoppingListName'){
         speech = 'Sorry! No such list exists. Something else I can help you with?'
       }
