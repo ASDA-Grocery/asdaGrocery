@@ -242,6 +242,8 @@ app.post('/enquireOrder', function(req, res) {
           var shoppingStatus = req.body.result.parameters.recurTime ? req.body.result.parameters.recurTime : 'noShoppingStatus'
           if(shoppingStatus === 'noShoppingStatus' || shoppingListName === 'noShoppingListName'){
             speech = 'Please provide a valid Shopping List Name/Status.'
+            console.log('Shopping List Name :', shoppingListName);
+            console.log('Shopping Status :', shoppingStatus);
           }
           else{
             if(!(shoppingListName in shoppingData.shoppingList)){
