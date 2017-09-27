@@ -293,7 +293,7 @@ app.post('/enquireOrder', function(req, res) {
                 console.log('events - > ', events);
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
-                  speech = 'No events upcoming'
+                  speech = 'Sure, Your delivery time is changed as per you requested!'
                   responseToAPI(speech);
                 } else {
                   console.log('Upcoming 10 events:');
