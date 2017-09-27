@@ -268,7 +268,7 @@ app.post('/enquireOrder', function(req, res) {
             console.log('intent - > ', intent);
             console.log('oauth - > ', oauth2Client);
             calendar.events.list({
-                auth: auth,
+                auth: oauth2Client,
                 calendarId: 'primary',
                 timeMin: (new Date()).toISOString(),
                 maxResults: 10,
