@@ -236,6 +236,7 @@ app.post('/enquireOrder', function(req, res) {
         else if(intent==='changeDeliveryDate'){
             console.log('intent - > ', intent);
             console.log('oauth - > ', oauth2Client);
+            speech = 'Your request to change the delivery time is processed';
     //         listEvents(oauth2Client);
         }
 
