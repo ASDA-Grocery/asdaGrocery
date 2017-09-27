@@ -333,7 +333,7 @@ app.post('/enquireOrder', function(req, res) {
                     orderPlacementDate: 'June 23, 2017',
                     value: '20 £',
                     status: 'closed',
-                    deliveryTime: getOrderTime(1440);
+                    deliveryTime: getOrderTime(1440)
                   };
                   orderData.orderDb.push(orderObj);
                 }
