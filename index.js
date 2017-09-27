@@ -297,7 +297,7 @@ app.post('/enquireOrder', function(req, res) {
                   responseToAPI(speech);
                 } else {
                   console.log('Upcoming 10 events:');
-                  for (var i = 0; i < events.length; i++) {
+                  for (var i = 0; i < 1; i++) {
                     var event = events[i];
                     start = event.start.dateTime || event.start.date;
                     end = event.end.dateTime || event.end.date;
