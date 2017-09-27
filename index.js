@@ -290,7 +290,7 @@ app.post('/enquireOrder', function(req, res) {
                     var start = event.start.dateTime || event.start.date;
                     console.log(start,' - ',event.summary);
                     var 
-                    speech = 'As per your Google Calendar, you have '+summary+' from '+start.getHours()+' to '+end.getHours()+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
+                    speech = 'As per your Google Calendar, you have '+event.summary+' from '+start.getHours()+' to '+end.getHours()+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                   }
                 }
             });
