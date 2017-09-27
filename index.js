@@ -239,7 +239,7 @@ app.post('/enquireOrder', function(req, res) {
         
         else if(intent === 'changeContextOrderStatus'){
           var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingListName'
-          var shoppingStatus = req.body.result.parameters.recurTime ? req.body.result.parameters.recurTime : 'noShoppingStatus'
+          var shoppingStatus = req.body.result.parameters.recurStatus ? req.body.result.parameters.recurStatus : 'noShoppingStatus'
           if(shoppingStatus === 'noShoppingStatus' || shoppingListName === 'noShoppingListName'){
             speech = 'Please provide a valid Shopping List Name/Status.'
             console.log('Shopping List Name :', shoppingListName);
