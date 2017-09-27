@@ -289,8 +289,9 @@ app.post('/enquireOrder', function(req, res) {
                     var event = events[i];
                     var start = event.start.dateTime || event.start.date;
                     console.log(start,' - ',event.summary);
-                    var 
-                    speech = 'As per your Google Calendar, you have '+event.summary+' from '+start.getHours()+' to '+end.getHours()+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
+                    var startDate = new Date(start)
+                      , endDate = new Date(end);                        
+                    speech = 'As per your Google Calendar, you have '+event.summary+' from '+startDate.getHours()+' to '+endDate.getHours()+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                   }
                 }
             });
