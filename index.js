@@ -33,6 +33,7 @@ app.post('/enquireOrder', function(req, res) {
     console.log('intent :',intent);
     if(accessToken === 'noAccessToken'){
         speech = 'Please Login to you google account';
+         responseToAPI(speech);
     }
 //     if(1 == 2){
 //         speech = 'Please Login to you google account';
@@ -72,6 +73,7 @@ app.post('/enquireOrder', function(req, res) {
             })
             speech = speech + ' Which one should I check?'
           }
+           responseToAPI(speech);
         }
         else if(intent === 'orderNo-status'){
           var orderNo = req.body.result.parameters.orderN ? parseInt(wordsToNumbers(req.body.result.parameters.orderN)) : 'noOrderNumber'
@@ -92,6 +94,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+           responseToAPI(speech);
         }
         else if(intent === 'orderDate-status'){
           var orderDateDay = req.body.result.parameters.orderDateDay ? wordsToNumbers(req.body.result.parameters.orderDateDay) : 'noOrderDateDay'
@@ -112,11 +115,12 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+          responseToAPI(speech);
         }
         else if(intent === 'orderCost-status'){
           var orderCost = req.body.result.parameters.orderCost ? req.body.result.parameters.orderCost : 'noOrderCost'
           if(orderCost === 'noOrderCost'){
-            speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
+            speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?';
           }
           else{
             var orderCounter = 0;
@@ -145,6 +149,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+          responseToAPI(speech);
         }
 
         else if(intent === 'changeRecurringOrderStatus'){
@@ -199,6 +204,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+          responseToAPI(speech);
         }
 
         else if(intent === 'updateShoppingList'){
@@ -235,6 +241,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+          responseToAPI(speech);
         }
         
         else if(intent === 'changeContextOrderStatus'){
@@ -262,6 +269,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+          responseToAPI(speech);
         }
 
         else if(intent === 'changeDeliveryDate'){
@@ -285,6 +293,8 @@ app.post('/enquireOrder', function(req, res) {
                 console.log('events - > ', events);
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
+                  speech = 'No events upcoming'
+                  responseToAPI(speech);
                 } else {
                   console.log('Upcoming 10 events:');
                   for (var i = 0; i < events.length; i++) {
@@ -297,6 +307,7 @@ app.post('/enquireOrder', function(req, res) {
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
+                        responseToAPI(speech);
                     }
                   }
                 }
@@ -306,16 +317,21 @@ app.post('/enquireOrder', function(req, res) {
 
         else{
           speech = 'Sorry! Unable to Understand'
+          responseToAPI(speech)
         }
     }
     
     //var tempData = req.query;
+    
+});
+
+function responseToAPI(speech){
     return res.json({
         speech: speech,
         displayText: speech,
         source: 'webhook-asda-assistant'
     });
-});
+}
 
 app.listen((process.env.PORT || 8000), function() {
     console.log("Server up and listening");
