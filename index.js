@@ -318,10 +318,11 @@ app.post('/enquireOrder', function(req, res) {
         }
         
         else if(intent === 'confirmDeliveryPostpone'){
-           var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingList'
-             , postponeTime = req.body.result.contexts[0].parameters.postponeTime ? req.body.result.contexts[0].parameters.postponeTime : 'noPostponeTime' ;
+           var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmpostpone')
+           var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingList'
+             , postponeTime = req.body.result.contexts[index].parameters.postponeTime ? req.body.result.contexts[index].parameters.postponeTime : 'noPostponeTime' ;
             console.log(' sdgugusdgu :', req.body.result)
-            console.log(' - > ',req.body.result.contexts[0].parameters.recurTime, req.body.result.contexts[0].parameters.postponeTime);
+            console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.postponeTime);
            if(shoppingListName === 'noShoppingList' || postponeTime === 'noPostponeTime'){
               speech = 'Sorry, unable to understand list name to be postponed';
            }
