@@ -318,8 +318,8 @@ app.post('/enquireOrder', function(req, res) {
         }
         
         else if(intent === 'confirmDeliveryPostpone'){
-           var shoppingListName = req.body.result.context[0].parameters.recurTime ? req.body.result.context[0].parameters.recurTime : 'noShoppingList'
-             , postponeTime = req.body.result.context[0].parameters.postponeTime ? req.body.result.context[0].parameters.postponeTime : 'noPostponeTime' ;
+           var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingList'
+             , postponeTime = req.body.result.contexts[0].parameters.postponeTime ? req.body.result.contexts[0].parameters.postponeTime : 'noPostponeTime' ;
            if(shoppingListName === 'noShoppinList' || postponeTime === 'noPostponeTime'){
               speech = 'Sorry, unable to understand list name to be postponed';
            }
