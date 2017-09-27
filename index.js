@@ -29,13 +29,16 @@ app.post('/enquireOrder', function(req, res) {
     var speech
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
-      , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
+//       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('intent :',intent);
-    if(accessToken != 'noAccessToken'){
+//     if(accessToken != 'noAccessToken'){
+//         speech = 'Please Login to you google account';
+//     }
+    if(1 == 2){
         speech = 'Please Login to you google account';
     }
     else {
-        oauth2Client.credentials = accessToken;
+//         oauth2Client.credentials = accessToken;
     
         if(intent === 'checkOrderStatus'){
           orderData.orderDb.forEach(function(element){
