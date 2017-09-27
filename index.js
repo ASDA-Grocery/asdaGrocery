@@ -316,6 +316,31 @@ app.post('/enquireOrder', function(req, res) {
             });
             
         }
+        
+        else if(intent === 'confirmDeliveryPostpone'){
+           var shoppingListName = req.body.result.context[0].parameters.recurTime ? req.body.result.context[0].parameters.recurTime : 'noShoppingList'
+             , postponeTime = req.body.result.context[0].parameters.postponeTime ? req.body.result.context[0].parameters.postponeTime : 'noPostponeTime' ;
+           if(shoppingListName === 'noShoppinList' || postponeTime === 'noPostponeTime'){
+              speech = 'Sorry, unable to understand list name to be postponed';
+           }
+           else {
+              if(postponeTime === 'tomorrow' || postponeTime === 'Tomorrow'){
+                var list = shoppingData.shoppingList['weekly'];
+                var Id = (orderData.orderDb.length + 1).toString();
+                var orderObj = {
+                    orderId: 'OR10000'+Id,
+                    productList: list.productList,
+                    orderPlacementDate: 'June 23, 2017',
+                    value: '20 £',
+                    status: 'closed',
+                    deliveryTime: getOrderTime(1440);
+                  };
+                  orderData.orderDb.push(orderObj);
+                }
+              }
+            speech = 'Your order has been placed and your order id is '+orderObj.orderId
+           }
+        }
 
         else{
           speech = 'Sorry! Unable to Understand'
