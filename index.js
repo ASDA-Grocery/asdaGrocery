@@ -236,6 +236,31 @@ app.post('/enquireOrder', function(req, res) {
             }
           }
         }
+        
+        else if(intent === 'changeContextOrderStatus'){
+          var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingListName'
+          var shoppingStatus = req.body.result.parameters.recurTime ? req.body.result.parameters.recurTime : 'noShoppingStatus'
+          if(shoppingStatus === 'noShoppingStatus' || shoppingListName === 'noShoppingListName'){
+            speech = 'Please provide a valid Shopping List Name/Status.'
+          }
+          else{
+            if(!(shoppingListName in shoppingData.shoppingList)){
+              speech = 'Please provide correct Shopping List Name'
+            }
+            else{
+              if(shoppingStatus === 'hold' ||shoppingStatus === 'pause' || shoppingStatus === 'stop'){
+                shoppingData.shoppingList[shoppingListName].status = 'hold'
+                var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
+                speech = "Sure. '" + tempList +  "' shopping list has been put on hold."
+              }
+              else{
+                shoppingData.shoppingList[shoppingListName].status = 'active'
+                var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
+                speech = "Sure. '" + tempList +  "' shopping list has been put on active."
+              }
+            }
+          }
+        }
 
         else if(intent === 'changeDeliveryDate'){
             console.log('intent - > ', intent);
