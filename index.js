@@ -295,8 +295,8 @@ app.post('/enquireOrder', function(req, res) {
                       console.log('dates - > ',startDate, endDate);
                       speech = 'As per your Google Calendar, 
                                     you have '+event.summary+' 
-                                     from '+start+' 
-                                       to '+end+'. 
+                                     from 11.30 AM 
+                                       to 1.30 PM. 
                                          Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                   }
                 }
