@@ -308,6 +308,7 @@ app.post('/enquireOrder', function(req, res) {
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
+                        console.log('param - > ', req.body.result.parameters.postponeTime);
                         responseToAPI(speech);
                     }
                   }
