@@ -293,6 +293,7 @@ app.post('/enquireOrder', function(req, res) {
                 console.log('events - > ', events);
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
+                  console.log('param - > ', req.body.result.parameters.postponeTime);
                   speech = 'Your order delivery is postponed as per you requested!'
                   responseToAPI(speech);
                 } else {
