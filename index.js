@@ -336,10 +336,10 @@ app.post('/enquireOrder', function(req, res) {
                     deliveryTime: getOrderTime(1440)
                  };
                  orderData.orderDb.push(orderObj);
+                 console.log('new postponed order - > ', orderData.orderDb);
+                 speech = 'Your order has been placed and your order id is '+orderObj.orderId;
                }
             }
-            console.log('new postponed order - > ', orderData.orderDb);
-            speech = 'Your order has been placed and your order id is '+orderObj.orderId
             responseToAPI(speech);
           }
         
