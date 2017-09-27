@@ -267,6 +267,8 @@ app.post('/enquireOrder', function(req, res) {
         else if(intent === 'changeDeliveryDate'){
             console.log('intent - > ', intent);
             console.log('oauth - > ', oauth2Client);
+            var start , end, summary = '';
+            var flag = false;
             calendar.events.list({
                 auth: oauth2Client,
                 calendarId: 'primary',
@@ -287,16 +289,20 @@ app.post('/enquireOrder', function(req, res) {
                   console.log('Upcoming 10 events:');
                   for (var i = 0; i < events.length; i++) {
                     var event = events[i];
-                    var start = event.start.dateTime || event.start.date;
-                    var end = event.end.dateTime || event.end.date;
-                    console.log(start,' - ',event.summary);
+                    start = event.start.dateTime || event.start.date;
+                    end = event.end.dateTime || event.end.date;
+                    summary = event.summary;
+                    flag = true;
+                    console.log(start,' - ',summary);
                     var startDate = new Date(start)
                       , endDate = new Date(end);    
                       console.log('dates - > ',startDate, endDate);
-                      speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                   }
                 }
             });
+            if(flag){
+                speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+            }
         }
 
         else{
