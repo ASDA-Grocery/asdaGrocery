@@ -289,10 +289,11 @@ app.post('/enquireOrder', function(req, res) {
                     var event = events[i];
                     var start = event.start.dateTime || event.start.date;
                     console.log(start,' - ',event.summary);
+                    var 
+                    speech = 'As per your Google Calendar, you have '+summary+' from '+start.getHours()+' to '+end.getHours()+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                   }
                 }
             });
-            speech = 'Your request to change the delivery time is processed';
         }
 
         else{
