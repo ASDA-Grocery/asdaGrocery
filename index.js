@@ -334,15 +334,15 @@ app.post('/enquireOrder', function(req, res) {
                     value: '20 £',
                     status: 'closed',
                     deliveryTime: getOrderTime(1440)
-                  };
-                  orderData.orderDb.push(orderObj);
-                }
-              }
+                 };
+                 orderData.orderDb.push(orderObj);
+               }
+            }
             console.log('new postponed order - > ', orderData.orderDb);
             speech = 'Your order has been placed and your order id is '+orderObj.orderId
             responseToAPI(speech);
-           }
-        }
+          }
+        
 
         else{
           speech = 'Sorry! Unable to Understand'
