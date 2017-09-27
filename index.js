@@ -330,13 +330,14 @@ app.post('/enquireOrder', function(req, res) {
               if(postponeTime === 'tomorrow' || postponeTime === 'Tomorrow'){
                 var list = shoppingData.shoppingList['weekly'];
                 var Id = (orderData.orderDb.length + 1).toString();
+                var date = new Date();
                 var orderObj = {
                     orderId: 'OR10000'+Id,
                     productList: list.productList,
                     orderPlacementDate: 'June 23, 2017',
                     value: '20 £',
                     status: 'closed',
-                    deliveryTime: getOrderTime(1440)
+                    deliveryTime: date
                  };
                  orderData.orderDb.push(orderObj);
                  console.log('new postponed order - > ', orderData.orderDb);
