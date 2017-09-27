@@ -225,13 +225,11 @@ app.post('/enquireOrder', function(req, res) {
                 }
               }
               productNameString = productNameString.slice(0, -2);
-              var tempIndex = productNameString.lastIndexOf(',');
-              var newProductNameString = productNameString.substr(0, tempIndex) + ' &' + productNameString.substr(tempIndex+1, productNameString.length);
               if(productQuantity == 1){
-                speech = "'Single' quantity of " + newProductNameString + " added to the weekly list. Anything else I can help you with?"
+                speech = "'Single' quantity of " + productNameString + " added to the weekly list. Anything else I can help you with?"
               }
               else{
-                speech = productQuantity + " quantity of " + newProductNameString + " added to the weekly list. Anything else I can help you with?"
+                speech = productQuantity + " quantities of " + productNameString + " added to the weekly list. Anything else I can help you with?"
               }
             }
           }
