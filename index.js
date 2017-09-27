@@ -28,7 +28,7 @@ app.post('/enquireOrder', function(req, res) {
     
     var speech
       , openCounter = 0
-      , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent";
+      , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     if(accessToken==='noAccessToken'){
         speech = 'Please Login to you google account';
