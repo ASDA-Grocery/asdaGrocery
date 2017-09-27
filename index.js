@@ -322,16 +322,15 @@ app.post('/enquireOrder', function(req, res) {
     }
     
     //var tempData = req.query;
+    function responseToAPI(speech){
+        return res.json({
+            speech: speech,
+            displayText: speech,
+            source: 'webhook-asda-assistant'
+        });
+    }
     
 });
-
-function responseToAPI(speech){
-    return res.json({
-        speech: speech,
-        displayText: speech,
-        source: 'webhook-asda-assistant'
-    });
-}
 
 app.listen((process.env.PORT || 8000), function() {
     console.log("Server up and listening");
