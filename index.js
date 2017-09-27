@@ -272,7 +272,7 @@ app.post('/enquireOrder', function(req, res) {
           responseToAPI(speech);
         }
 
-        else if(intent === 'changeDeliveryDate'){
+        else if(intent === 'postponeDelivery'){
             console.log('intent - > ', intent);
             console.log('oauth - > ', oauth2Client);
             var start , end, summary = '';
@@ -293,7 +293,7 @@ app.post('/enquireOrder', function(req, res) {
                 console.log('events - > ', events);
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
-                  speech = 'Sure, Your delivery time is changed as per you requested!'
+                  speech = 'Your order delivery is postponed as per you requested!'
                   responseToAPI(speech);
                 } else {
                   console.log('Upcoming 10 events:');
