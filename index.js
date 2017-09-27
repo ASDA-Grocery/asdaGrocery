@@ -30,6 +30,7 @@ app.post('/enquireOrder', function(req, res) {
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
+    console.log('intent :',intent);
     if(accessToken==='noAccessToken'){
         speech = 'Please Login to you google account';
     }
@@ -233,7 +234,7 @@ app.post('/enquireOrder', function(req, res) {
           }
         }
 
-        else if(intent==='changeDeliveryDate'){
+        else if(intent === 'changeDeliveryDate'){
             console.log('intent - > ', intent);
             console.log('oauth - > ', oauth2Client);
             speech = 'Your request to change the delivery time is processed';
