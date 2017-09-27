@@ -293,7 +293,11 @@ app.post('/enquireOrder', function(req, res) {
                     var startDate = new Date(start)
                       , endDate = new Date(end);    
                       console.log('dates - > ',startDate, endDate);
-                      speech = 'As per your Google Calendar, you have '+event.summary+' from '+startDate.getHours()+' to '+endDate.getHours()+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
+                      speech = 'As per your Google Calendar, 
+                                    you have '+event.summary+' 
+                                     from '+start+' 
+                                       to '+end+'. 
+                                         Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                   }
                 }
             });
