@@ -29,16 +29,18 @@ app.post('/enquireOrder', function(req, res) {
     var speech
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
-//       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
+      , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('intent :',intent);
-//     if(accessToken != 'noAccessToken'){
-//         speech = 'Please Login to you google account';
-//     }
-    if(1 == 2){
+    if(accessToken != 'noAccessToken'){
         speech = 'Please Login to you google account';
     }
+//     if(1 == 2){
+//         speech = 'Please Login to you google account';
+//     }
     else {
-//         oauth2Client.credentials = accessToken;
+        oauth2Client.setCredentials({
+          access_token:accessToken
+        });
     
         if(intent === 'checkOrderStatus'){
           orderData.orderDb.forEach(function(element){
@@ -293,10 +295,11 @@ function listEvents(auth) {
         orderBy: 'startTime'
     }, function(err, response) {
         if (err) {
-          console.log('The API returned an error: ' + err);
+          console.log('The Calendar API returned an error: ' + err);
           return;
         }
         var events = response.items;
+        console.log('events - > ', events);
         if (events.length == 0) {
           console.log('No upcoming events found.');
         } else {
