@@ -339,6 +339,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
+          responseToAPI(speech);
         }
 
 //         else if(intent === 'postponeDelivery'){
