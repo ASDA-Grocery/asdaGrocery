@@ -318,7 +318,7 @@ app.post('/enquireOrder', function(req, res) {
         
         else if(intent === 'optionsFindProduct'){
           var index = req.body.result.contexts.findIndex((x) => x.name === 'searchproducts')
-          var mineralValue = req.body.result.parameters.number ? req.body.result.parameters.number : 'noMineralValue',
+          var mineralValue = req.body.result.parameters.number ? req.body.result.parameters.number : 'noMineralValue'
           var mineralType = req.body.result.contexts[index].parameters.mineralType ? req.body.result.contexts[index].parameters.mineralType : 'noMineralType'
           if(mineralType === 'noMineralType'){
             speech = 'No mineralType context'
