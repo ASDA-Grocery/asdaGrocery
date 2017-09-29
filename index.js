@@ -7,6 +7,8 @@ const express = require('express')
 
 var orderData = require('./orderDb.js')
   , shoppingData = require('./shoppingList.js')
+  , productData = require('./productList.js')
+  , customerData = require('./customerList.js')
   , openNotificationsData = require('./openNotifications.js');
 
 const google = require('googleapis')
