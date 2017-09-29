@@ -315,6 +315,31 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
+        
+        else if(intent === 'optionsFindProduct'){
+          var index = req.body.result.contexts.findIndex((x) => x.name === 'searchproducts')
+          var mineralValue = req.body.result.parameters.number ? req.body.result.parameters.number : 'noMineralValue',
+          var mineralType = req.body.result.contexts[index].parameters.mineralType ? req.body.result.contexts[index].parameters.mineralType : 'noMineralType'
+          if(mineralType === 'noMineralType'){
+            speech = 'No mineralType context'
+          }
+          else{
+            speech = ''
+            if(mineralValue != 'noMineralValue'){
+              productData.productList.forEach(function(element){
+                if(element[mineralType] == mineralValue){
+                  speech = speech + element.productName + ', '
+                }
+              })
+              speech = speech.slice(0,-2)
+              var tempIndex = speech.lastIndexOf(',')
+              if(tempIndex != -1){
+                var tempSpeech = speech.substr(0, tempIndex) + ' &' + speech.substr(tempIndex+1, speech.length-1)
+                speech = tempSpeech
+              }
+            }
+          }
+        }
 
 //         else if(intent === 'postponeDelivery'){
 //             console.log('intent - > ', intent);
