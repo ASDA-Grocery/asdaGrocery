@@ -29,19 +29,19 @@ app.post('/enquireOrder', function(req, res) {
     var speech = 'This is the default speech'
       , openCounter = 0
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
-      , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
+//       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('intent :',intent);
-    if(accessToken === 'noAccessToken'){
-        speech = 'Please Login to you google account';
-         responseToAPI(speech);
-    }
-//     if(1 == 2){
+//     if(accessToken === 'noAccessToken'){
 //         speech = 'Please Login to you google account';
+//          responseToAPI(speech);
 //     }
+    if(1 == 2){
+        speech = 'Please Login to you google account';
+    }
     else {
-        oauth2Client.setCredentials({
-          access_token:accessToken
-        });
+//         oauth2Client.setCredentials({
+//           access_token:accessToken
+//         });
     
         if(intent === 'checkOrderStatus'){
           orderData.orderDb.forEach(function(element){
@@ -271,81 +271,123 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
-
-        else if(intent === 'postponeDelivery'){
-            console.log('intent - > ', intent);
-            console.log('oauth - > ', oauth2Client);
-            var start , end, summary = '';
-            var flag = false;
-            calendar.events.list({
-                auth: oauth2Client,
-                calendarId: 'primary',
-                timeMin: (new Date()).toISOString(),
-                maxResults: 10,
-                singleEvents: true,
-                orderBy: 'startTime'
-            }, function(err, response) {
-                if (err) {
-                  console.log('The Calendar API returned an error: ' + err);
-                  return;
-                }
-                var events = response.items;
-                console.log('events - > ', events);
-                if (events.length == 0) {
-                  console.log('No upcoming events found.');
-                  console.log('param - > ', req.body.result.parameters.postponeTime);
-                  speech = 'Your order delivery is postponed as per you requested!'
-                  responseToAPI(speech);
-                } else {
-                  console.log('Upcoming 10 events:');
-                  for (var i = 0; i < 1; i++) {
-                    var event = events[i];
-                    start = event.start.dateTime || event.start.date;
-                    end = event.end.dateTime || event.end.date;
-                    summary = event.summary;
-                    flag = true;
-                    console.log(start,' - ',summary);
-                    if(flag){
-                        speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
-                        console.log('inside last if - > ',speech, intent);
-                        console.log('param - > ', req.body.result.parameters.postponeTime);
-                        responseToAPI(speech);
-                    }
-                  }
-                }
-            });
-            
-        }
         
-        else if(intent === 'confirmDeliveryPostpone'){
-           var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmpostpone')
-           var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingList'
-             , postponeTime = req.body.result.contexts[index].parameters.postponeTime ? req.body.result.contexts[index].parameters.postponeTime : 'noPostponeTime' ;
-            console.log(' sdgugusdgu :', req.body.result)
-            console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.postponeTime);
-           if(shoppingListName === 'noShoppingList' || postponeTime === 'noPostponeTime'){
-              speech = 'Sorry, unable to understand list name to be postponed';
-           }
-           else {
-              if(postponeTime === 'tomorrow' || postponeTime === 'Tomorrow'){
-                var list = shoppingData.shoppingList['weekly'];
-                var Id = (orderData.orderDb.length + 1).toString();
-                var date = new Date();
-                var orderObj = {
-                    orderId: 'OR10000'+Id,
-                    productList: list.productList,
-                    orderPlacementDate: 'June 23, 2017',
-                    value: '20 £',
-                    status: 'closed',
-                    deliveryTime: date
-                 };
-                 orderData.orderDb.push(orderObj);
-                 console.log('new postponed order - > ', orderData.orderDb);
-                 speech = 'Your order has been placed successfully';
-               }
-            }
-            responseToAPI(speech);
+        else if(intent === 'findProducts'){
+          var mineralContent = req.body.result.parameters.mineralContent ? req.body.result.parameters.mineralContent : 'noMineralContent'
+          var mineralType = req.body.result.parameters.mineralType ? req.body.result.parameters.mineralType : 'noMineralType'
+          var productType = req.body.result.parameters.productType ? req.body.result.parameters.productType : 'noProductType'
+          if(mineralType === 'noMineralType' || productType === 'noProductType' || mineralContent === 'noMineralContent'){
+            speech = 'Please specify a proper product with proper details.'
           }
+          else{
+            var countObj = {}
+              , keyArray = new Array();
+            productData.productList.forEach(function(element){
+              if(!(element[mineralType] in countObj)){
+                var tempKey = element[mineralType]
+                countObj[tempKey] = 1;
+                keyArray.push(tempKey)
+              }
+              else{
+                var tempKey = element[mineralType]
+                var tempVal = countObj[tempKey]
+                countObj[tempKey] = tempVal + 1;
+              }
+            })
+            keyArray.sort(function(a,b){
+              return a - b;
+            });
+            if(mineralContent === 'high'){
+              speech = 'We have '+ countObj[keyArray[keyArray.length - 1]] + ' options with '
+                        + keyArray[keyArray.length - 1] + ' grams and ' + countObj[keyArray[keyArray.length - 2]]
+                        + ' options with ' + keyArray[keyArray.length - 2]+ ' grams in each bar.'
+            }
+            else if(mineralContent === 'low'){
+              speech = 'We have '+ countObj[keyArray[0]] + ' options with '
+                        + keyArray[0] + ' grams and ' + countObj[keyArray[1]]
+                        + ' options with ' + keyArray[1] + ' grams in each bar.'
+            }
+            else{
+              speech = 'Sorry this level of content is not available.'
+            }
+          }
+          responseToAPI(speech);
+        }
+
+//         else if(intent === 'postponeDelivery'){
+//             console.log('intent - > ', intent);
+//             console.log('oauth - > ', oauth2Client);
+//             var start , end, summary = '';
+//             var flag = false;
+//             calendar.events.list({
+//                 auth: oauth2Client,
+//                 calendarId: 'primary',
+//                 timeMin: (new Date()).toISOString(),
+//                 maxResults: 10,
+//                 singleEvents: true,
+//                 orderBy: 'startTime'
+//             }, function(err, response) {
+//                 if (err) {
+//                   console.log('The Calendar API returned an error: ' + err);
+//                   return;
+//                 }
+//                 var events = response.items;
+//                 console.log('events - > ', events);
+//                 if (events.length == 0) {
+//                   console.log('No upcoming events found.');
+//                   console.log('param - > ', req.body.result.parameters.postponeTime);
+//                   speech = 'Your order delivery is postponed as per you requested!'
+//                   responseToAPI(speech);
+//                 } else {
+//                   console.log('Upcoming 10 events:');
+//                   for (var i = 0; i < 1; i++) {
+//                     var event = events[i];
+//                     start = event.start.dateTime || event.start.date;
+//                     end = event.end.dateTime || event.end.date;
+//                     summary = event.summary;
+//                     flag = true;
+//                     console.log(start,' - ',summary);
+//                     if(flag){
+//                         speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+//                         console.log('inside last if - > ',speech, intent);
+//                         console.log('param - > ', req.body.result.parameters.postponeTime);
+//                         responseToAPI(speech);
+//                     }
+//                   }
+//                 }
+//             });
+            
+//         }
+        
+//         else if(intent === 'confirmDeliveryPostpone'){
+//            var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmpostpone')
+//            var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingList'
+//              , postponeTime = req.body.result.contexts[index].parameters.postponeTime ? req.body.result.contexts[index].parameters.postponeTime : 'noPostponeTime' ;
+//             console.log(' sdgugusdgu :', req.body.result)
+//             console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.postponeTime);
+//            if(shoppingListName === 'noShoppingList' || postponeTime === 'noPostponeTime'){
+//               speech = 'Sorry, unable to understand list name to be postponed';
+//            }
+//            else {
+//               if(postponeTime === 'tomorrow' || postponeTime === 'Tomorrow'){
+//                 var list = shoppingData.shoppingList['weekly'];
+//                 var Id = (orderData.orderDb.length + 1).toString();
+//                 var date = new Date();
+//                 var orderObj = {
+//                     orderId: 'OR10000'+Id,
+//                     productList: list.productList,
+//                     orderPlacementDate: 'June 23, 2017',
+//                     value: '20 £',
+//                     status: 'closed',
+//                     deliveryTime: date
+//                  };
+//                  orderData.orderDb.push(orderObj);
+//                  console.log('new postponed order - > ', orderData.orderDb);
+//                  speech = 'Your order has been placed successfully';
+//                }
+//             }
+//             responseToAPI(speech);
+//           }
         
 
         else{
