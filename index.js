@@ -386,7 +386,7 @@ app.post('/enquireOrder', function(req, res) {
         }
         
         else if(intent === 'addToCart&Checkout'){
-          var index = req.body.result.contexts.findIndex((x) => x.name === 'addProductCart')
+          var index = req.body.result.contexts.findIndex((x) => x.name === 'addproductcart')
           var number = req.body.result.parameters.number ? req.body.result.parameters.number : 'noNumberIntegerValue'
           var productName = req.body.result.contexts[index].parameters.productName ? req.body.result.contexts[index].parameters.productName : 'noProductName'
           var checkoutBool = req.body.result.contexts[index].parameters.checkout ? req.body.result.contexts[index].parameters.checkout : 'noCheckout'
