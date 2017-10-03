@@ -430,7 +430,8 @@ app.post('/enquireOrder', function(req, res) {
         return res.json({
             speech: speech,
             displayText: speech,
-            source: 'webhook-asda-assistant'
+            source: 'webhook-asda-assistant',
+            contextOut: [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}]
         });
     }
     
