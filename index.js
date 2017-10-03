@@ -338,7 +338,7 @@ app.post('/enquireOrder', function(req, res) {
               if(tempIndex != -1){
                 var tempSpeech = speech.substr(0, tempIndex) + ' &' + speech.substr(tempIndex+1, speech.length-1)
                 speech = tempSpeech
-                contextOut = [{"name":"intitalContent", "lifespan":5, "parameters":{'initialMineralValue': mineralType}}]
+                contextOut = [{"name":"intitalContent", "lifespan":5, "parameters":{'initialMineralType': mineralType}}]
               }
             }
           }
