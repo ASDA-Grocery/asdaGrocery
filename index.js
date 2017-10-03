@@ -414,6 +414,18 @@ app.post('/enquireOrder', function(req, res) {
           responseToAPI(speech)
         }
         
+        else if(intent === 'checkoutAfterConfirmation'){
+          var negativeConfirmation = req.body.result.parameters.negativeConfirmation ? req.body.result.parameters.negativeConfirmationr : 'noNegativeConfirmation'
+          var positiveConfirmation = req.body.result.parameters.positiveConfirmation ? req.body.result.parameters.positiveConfirmation : 'noPositiveConfirmation'
+          if(negativeConfirmation === 'noNegativeConfirmation'){
+            speech = 'Sure. Checkout Done'
+          }
+          else{
+            speech = 'Alright. Is there anything else I can help now?'
+          }
+          responseToAPI(speech);  
+        }
+        
 
 //         else if(intent === 'postponeDelivery'){
 //             console.log('intent - > ', intent);
