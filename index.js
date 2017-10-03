@@ -203,7 +203,7 @@ app.post('/enquireOrder', function(req, res) {
                 }
               }
               else{
-                speech = 'No a valid status. Please provide a valid status.'
+                speech = 'Not a valid status. Please provide a valid status.'
               }
             }
           }
@@ -380,6 +380,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             })
             speech = productName;
+            contextOut = [{"name":"addProductCart", "lifespan":5, "parameters":{'productName': productName}}]
           }
           responseToAPI(speech);
         }
