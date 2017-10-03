@@ -30,6 +30,7 @@ app.post('/enquireOrder', function(req, res) {
     
     var speech = 'This is the default speech'
       , openCounter = 0
+      , contextOut
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
 //       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('intent :',intent);
@@ -431,7 +432,7 @@ app.post('/enquireOrder', function(req, res) {
             speech: speech,
             displayText: speech,
             source: 'webhook-asda-assistant',
-            contextOut: [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}]
+            contextOut: contextOut
         });
     }
     
