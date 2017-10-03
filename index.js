@@ -384,6 +384,38 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
+        
+        else if(intent === 'addToCart&Checkout'){
+          var index = req.body.result.contexts.findIndex((x) => x.name === 'addProductCart')
+          var number = req.body.result.parameters.number-integer ? req.body.result.parameters.number-integer : 'noNumberIntegerValue'
+          var productName = req.body.result.contexts[index].parameters.productName ? req.body.result.contexts[index].parameters.productName : 'noProductName'
+          var checkoutBool = req.body.result.contexts[index].parameters.checkout ? req.body.result.contexts[index].parameters.checkout : 'noCheckout'
+          if(checkoutBool === 'noCheckout' || checkoutBool === ''){
+            var prodIndex = productData.productList.findIndex((x) => x.productName === productName)
+            var product = {
+              productId: productData.productList[prodIndex].productId,
+              productName: productName,
+              quantity: number
+            }
+            shoppingData.shoppingList.cart.productList.push(product)
+            console.log(shoppingData.shoppingList.cart.productList);
+            speech = number + ' ' + productName + 'added to the cart. Do you want to proceed to checkout?'
+          }
+          else{
+            //console.log(shoppingData.shoppingList.cart.productList);
+            var prodIndex = productData.productList.findIndex((x) => x.productName === productName)
+            var product = {
+              productId: productData.productList[prodIndex].productId,
+              productName: productName,
+              quantity: number
+            }
+            shoppingData.shoppingList.cart.productList.push(product)
+            console.log(shoppingData.shoppingList.cart.productList);
+            speech = number + ' ' + productName + 'added to the cart & checkout.'
+          }
+          responseToAPI(speech);
+        }
+        
 
 //         else if(intent === 'postponeDelivery'){
 //             console.log('intent - > ', intent);
