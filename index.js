@@ -344,6 +344,43 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
+        
+        else if(intent === 'findSpecificContentProduct'){
+          var index = req.body.result.contexts.findIndex((x) => x.name === 'searchproducts')
+          var initialIndex = req.body.result.contexts.findIndex((x) => x.name === 'initialcontent')
+          var mineralValue = req.body.result.contexts[index].parameters.number ? req.body.result.contexts[index].parameters.number : 'noMineralValue'
+          var mineralType = req.body.result.parameters.mineralType ? req.body.result.parameters.mineralType : 'noMineralType'
+          var initialMineralType = req.body.result.contexts[initialIndex].parameters.initialMineralType ? req.body.result.contexts[initialIndex].parameters.initialMineralType : 'noInitialMineralType'
+          var mineralContent = req.body.result.parameters.mineralContent ? req.body.result.parameters.mineralContent : 'noMineralContent'
+          if(mineralValue === 'noMineralValue'){
+            speech = 'No mineralValue context'
+          }
+          else{
+            speech = ''
+            var contentLevel = -1
+              , productName
+              , totalProducts = productData.productList.length;
+            productData.productList.forEach(function(element){
+              if(mineralContent === 'low' || mineralContent === 'lower'){
+                if(element[initialMineralType] === mineralValue){
+                  if(element[mineralType] < contentLevel || contentLevel < 0){
+                    low = element[mineralType]
+                    productName = element.productName;
+                  }
+                }
+              }
+              else if(mineralContent === 'high' || mineralContent === 'higher' || mineralContent === 'good'){
+                if(element[initialMineralType] === mineralValue){
+                  if(contentLevel < 0 || element[mineralType] > contentLevel){
+                    low = element[mineralType]
+                    productName = element.productName;
+                  }
+                }
+              }
+            })
+            speech = productName;
+          }
+        }
 
 //         else if(intent === 'postponeDelivery'){
 //             console.log('intent - > ', intent);
