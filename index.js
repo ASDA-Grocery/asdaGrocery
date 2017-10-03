@@ -76,7 +76,7 @@ app.post('/enquireOrder', function(req, res) {
             })
             speech = speech + ' Which one should I check?'
           }
-           responseToAPI(speech);
+          responseToAPI(speech);
         }
         else if(intent === 'orderNo-status'){
           var orderNo = req.body.result.parameters.orderN ? parseInt(wordsToNumbers(req.body.result.parameters.orderN)) : 'noOrderNumber'
@@ -97,7 +97,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             }
           }
-           responseToAPI(speech);
+          responseToAPI(speech);
         }
         else if(intent === 'orderDate-status'){
           var orderDateDay = req.body.result.parameters.orderDateDay ? wordsToNumbers(req.body.result.parameters.orderDateDay) : 'noOrderDateDay'
