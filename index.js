@@ -364,7 +364,7 @@ app.post('/enquireOrder', function(req, res) {
               if(mineralContent === 'low' || mineralContent === 'lower'){
                 if(element[initialMineralType] === mineralValue){
                   if(element[mineralType] < contentLevel || contentLevel < 0){
-                    low = element[mineralType]
+                    contentLevel = element[mineralType]
                     productName = element.productName;
                   }
                 }
@@ -372,7 +372,7 @@ app.post('/enquireOrder', function(req, res) {
               else if(mineralContent === 'high' || mineralContent === 'higher' || mineralContent === 'good'){
                 if(element[initialMineralType] === mineralValue){
                   if(contentLevel < 0 || element[mineralType] > contentLevel){
-                    low = element[mineralType]
+                    contentLevel = element[mineralType]
                     productName = element.productName;
                   }
                 }
