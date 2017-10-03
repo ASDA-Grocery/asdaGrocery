@@ -1,4 +1,15 @@
 exports.shoppingList = {
+  
+  'cart': {
+    productList: [
+      {
+        productId: 'PR100113',
+        productName: 'product113',
+        quantity: 3
+      }
+    ],
+    status: 'resume'
+  },
 
   'party': {
     productList: [
