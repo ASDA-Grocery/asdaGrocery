@@ -391,7 +391,6 @@ app.post('/enquireOrder', function(req, res) {
           var productName = req.body.result.contexts[index].parameters.productName ? req.body.result.contexts[index].parameters.productName : 'noProductName'
           var checkoutBool = req.body.result.contexts[index].parameters.checkout ? req.body.result.contexts[index].parameters.checkout : 'noCheckout'
           if(checkoutBool === 'noCheckout' || checkoutBool === ''){
-            console.log('inside if')
             var prodIndex = productData.productList.findIndex((x) => x.productName === productName)
             var product = {
               productId: productData.productList[prodIndex].productId,
@@ -400,10 +399,9 @@ app.post('/enquireOrder', function(req, res) {
             }
             shoppingData.shoppingList.cart.productList.push(product)
             console.log(shoppingData.shoppingList.cart.productList);
-            speech = number + ' ' + productName + 'added to the cart. Do you want to proceed to checkout?'
+            speech = number + ' ' + productName + ' added to the cart. Do you want to proceed to checkout?'
           }
           else{
-            console.log('inside else');
             var prodIndex = productData.productList.findIndex((x) => x.productName === productName)
             var product = {
               productId: productData.productList[prodIndex].productId,
@@ -411,10 +409,8 @@ app.post('/enquireOrder', function(req, res) {
               quantity: number
             }
             shoppingData.shoppingList.cart.productList.push(product)
-            console.log(shoppingData.shoppingList.cart.productList);
-            speech = number + ' ' + productName + 'added to the cart & checkout.'
+            speech = number + ' ' + productName + ' added to the cart & checkout.'
           }
-          console.log('winding up')
           responseToAPI(speech)
         }
         
