@@ -34,8 +34,7 @@ app.post('/enquireOrder', function(req, res) {
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
       , contexts =  req.body.result && req.body.result.contexts ? req.body.result.contexts : "noContexts"
       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
-    console.log('intent :',intent);
-    console.log('contexts :',contexts);
+
     if(accessToken === 'noAccessToken'){
         speech = 'Please Login to you google account';
          responseToAPI(speech);
@@ -476,9 +475,10 @@ app.post('/enquireOrder', function(req, res) {
                     console.log('check noon date _ > ', noonDate,sDate,eDate);
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
-                    if(req.body.result.contexts[index].parameters.timeSlabOccurance=='before'||req.body.result.contexts[index].parameters.timeSlab1=='noon'||req.body.result.contexts[index].parameters.timeSlab1=='morning'){
+                    if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
+                        console.log('1ST IF -- > ');
                         if(startTime<=noonDate){
-                            console.log('inside the ifffffff -- >');
+                            console.log('2ND IF -- >');
                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                             responseToAPI(speech);
                         }
