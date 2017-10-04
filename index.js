@@ -358,6 +358,9 @@ app.post('/enquireOrder', function(req, res) {
           var mineralType = req.body.result.parameters.mineralType ? req.body.result.parameters.mineralType : 'noMineralType'
           var initialMineralType = req.body.result.contexts[initialIndex].parameters.initialMineralType ? req.body.result.contexts[initialIndex].parameters.initialMineralType : 'noInitialMineralType'
           var mineralContent = req.body.result.parameters.mineralContent ? req.body.result.parameters.mineralContent : 'noMineralContent'
+          console.log('Mineral Value:', mineralValue)
+          console.log('Mineral Type:', mineralType)
+          console.log('Initial Mineral Type:', initialMineralType)
           if(mineralValue === 'noMineralValue'){
             speech = 'No mineralValue context'
           }
