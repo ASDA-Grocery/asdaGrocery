@@ -197,7 +197,7 @@ app.post('/enquireOrder', function(req, res) {
                   var tempIndex = productNameString.lastIndexOf(',');
                   var newProductNameString = productNameString.substr(0, tempIndex) + productNameString.substr(tempIndex+1, productNameString.length);
                   speech = "Sure. '" + tempList +  "' shopping list is now active. Also '" + newProductNameString
-                           + "' is back in stock. Would you like to add that to your weekly list?"
+                           + "' is back in stock. Would you like to add that to your "+ tempList + " list?"
                 }
                 else{
                   console.log('Odd');
