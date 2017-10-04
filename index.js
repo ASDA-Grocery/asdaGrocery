@@ -384,7 +384,7 @@ app.post('/enquireOrder', function(req, res) {
               }
             })
             speech = productName;
-            contextOut = [{"name":"addProductCart", "lifespan":5, "parameters":{'productName': productName}}]
+            contextOut = [{"name":"addproductcart", "lifespan":5, "parameters":{'productName': productName}}]
           }
           responseToAPI(speech);
         }
@@ -394,6 +394,7 @@ app.post('/enquireOrder', function(req, res) {
           var number = req.body.result.parameters.number ? req.body.result.parameters.number : 'noNumberIntegerValue'
           var productName = req.body.result.contexts[index].parameters.productName ? req.body.result.contexts[index].parameters.productName : 'noProductName'
           var checkoutBool = req.body.result.contexts[index].parameters.checkout ? req.body.result.contexts[index].parameters.checkout : 'noCheckout'
+          
           if(checkoutBool === 'noCheckout' || checkoutBool === ''){
             var prodIndex = productData.productList.findIndex((x) => x.productName === productName)
             var product = {
