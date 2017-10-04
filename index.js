@@ -460,16 +460,12 @@ app.post('/enquireOrder', function(req, res) {
                       , start = event.start.dateTime || event.start.date
                       , end = event.end.dateTime || event.end.date                
                       , sDate = new Date(start)
-                      , getSHours = sDate.getHours() + 5
-                      , istSDate = sDate.setHours(getSHours)
-//                       , startDate = istSDate.toLocaleTimeString()
                       , eDate = new Date(end)
                       , endTime = eDate.toLocaleTimeString()
                       , summary = event.summary;
                     flag = true;
-                    console.log('[x] - > ', sDate, getSHours, istSDate);
-                    console.log('start test date - > ',startDate, typeof(startDate));
-                    console.log(start, typeof(start),' - ',summary);
+                    console.log('[x] - > ', sDate);
+                    console.log(start,' - ',summary);
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30AM to 12.30PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
