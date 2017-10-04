@@ -466,6 +466,7 @@ app.post('/enquireOrder', function(req, res) {
                       , summary = event.summary;
                     flag = true;
                     console.log('typeof date from calendar api', typeof start)
+                    console.log('converting to locale format', sDate.toLocaleFormat())
                     console.log('checking for to LAcale string', sDate.toLocaleTimeString())
                     console.log('[x] - > ', sDate, timeZone);
                     console.log(start,' - ',summary);
