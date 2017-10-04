@@ -373,6 +373,8 @@ app.post('/enquireOrder', function(req, res) {
             productData.productList.forEach(function(element){
               if(mineralContent === 'low' || mineralContent === 'lower'){
                 console.log('element initial mineral type: ', element[initialMineralType])
+                console.log('typeof initial mineral value : ', typeof element[initialMineralType])
+                console.log('typeof mineral value : ', typeof mineralValue)
                 if(element[initialMineralType] === mineralValue){
                   console.log('inside if dsyfdysf')
                   if(element[mineralType] < contentLevel || contentLevel < 0){
