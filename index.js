@@ -483,6 +483,12 @@ app.post('/enquireOrder', function(req, res) {
                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                             responseToAPI(speech);
                         }
+                        else if(startTime>=noonDate){
+                             console.log('apdika   ');
+                        }
+                        else{
+                            console.log('ipdika');
+                        }
                     }
 //                     if(flag){
 //                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
