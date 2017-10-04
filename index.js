@@ -456,19 +456,25 @@ app.post('/enquireOrder', function(req, res) {
                 } else {
                   console.log('Upcoming 10 events:');
                   for (var i = 0; i < 1; i++) {
+                    function convertUTCDateToLocalDate(date) {
+                        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+                        var offset = date.getTimezoneOffset() / 60;
+                        var hours = date.getHours();
+                        newDate.setHours(hours - offset);
+                        return newDate;   
+                    }
                     var event = events[i]
                       , start = event.start.dateTime || event.start.date
                       , end = event.end.dateTime || event.end.date
+                      , testSDate = convertUTCDateToLocalDate(start)                  
                       , sDate = new Date(start)
                       , localeStartDate = sDate.toLocaleTimeString()
-                      , utcHours = localeStartDate.getHours()
-                      , istHours = utcsDate + 5
-                      , startTime = localeStartDate.setHours(istHours)
                       , eDate = new Date(end)
                       , endTime = eDate.toLocaleTimeString()
                       , summary = event.summary;
                     flag = true;
-                    console.log(start, typeof(start), startTime, eDate.getHours(),' - ',summary);
+                    console.log('start test date - > ',testSDate, typeof(testSDate));
+                    console.log(start, typeof(start),' - ',summary);
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
