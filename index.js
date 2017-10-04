@@ -354,7 +354,7 @@ app.post('/enquireOrder', function(req, res) {
           console.log('checking contexts: ', req.body.result.contexts)
           var index = req.body.result.contexts.findIndex((x) => x.name === 'searchproduct')
           var initialIndex = req.body.result.contexts.findIndex((x) => x.name === 'initialcontent')
-          var mineralValue = req.body.result.contexts[index].parameters.number ? req.body.result.contexts[index].parameters.number : 'noMineralValue'
+          var mineralValue = req.body.result.contexts[index].parameters.number ? parseInt(req.body.result.contexts[index].parameters.number) : 'noMineralValue'
           var mineralType = req.body.result.parameters.mineralType ? req.body.result.parameters.mineralType : 'noMineralType'
           var initialMineralType = req.body.result.contexts[initialIndex].parameters.initialMineralType ? req.body.result.contexts[initialIndex].parameters.initialMineralType : 'noInitialMineralType'
           var mineralContent = req.body.result.parameters.mineralContent ? req.body.result.parameters.mineralContent : 'noMineralContent'
