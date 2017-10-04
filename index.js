@@ -375,7 +375,14 @@ app.post('/enquireOrder', function(req, res) {
                   if(element[mineralType] < contentLevel || contentLevel < 0){
                     contentLevel = element[mineralType]
                     productName = element.productName;
+                    console.log('ping')
                   }
+                  else{
+                    console.log('pong')
+                  }
+                }
+                else{
+                  console.log('pongsdhfgsdyu')
                 }
               }
               else if(mineralContent === 'high' || mineralContent === 'higher' || mineralContent === 'good'){
