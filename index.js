@@ -501,12 +501,27 @@ app.post('/enquireOrder', function(req, res) {
                             responseToAPI(speech);
                         }
                         else if(sDate>noonDate){
-                            console.log('apdika   ');
                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'                
                             responseToAPI(speech);
                         }
                         else{
-                            console.log('ipdika');
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            responseToAPI(speech);
+                        }
+                    }
+                    else {
+                         if(sDate<=noonDate){
+                            console.log('2ND IF -- >');
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            responseToAPI(speech);
+                        }
+                        else if(sDate>noonDate){
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'                
+                            responseToAPI(speech);
+                        }
+                        else{
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            responseToAPI(speech);
                         }
                     }
 //                     if(flag){
