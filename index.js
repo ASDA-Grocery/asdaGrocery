@@ -473,9 +473,9 @@ app.post('/enquireOrder', function(req, res) {
                     var noonDate = new Date();
                     noonDate.setDate(noonDate.getDate()+1);
                     noonDate.setHours(12);
-                    noonDate.setMinutes(00);
-                    noonDate.setSeconds(00);
-                    console.log('check noon date _ > ', noonDate);
+                    noonDate.setMinutes(0);
+                    noonDate.setSeconds(0);
+                    console.log('check noon date _ > ', noonDate,sDate,eDate);
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
 //                     if(req.body.result.contexts[index].parameters.timeSlabOccurance=='before'||req.body.result.contexts[index].parameters.timeSlab1=='noon'||req.body.result.contexts[index].parameters.timeSlab1=='morning'){
