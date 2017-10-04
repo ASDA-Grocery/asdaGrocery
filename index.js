@@ -486,6 +486,9 @@ app.post('/enquireOrder', function(req, res) {
                         else if(startTime>noonDate){
                              console.log('apdika   ');
                         }
+                        else if(startTime===noonDate){
+                             console.log('hjhadjdfhfj   ');
+                        }
                         else{
                             console.log('ipdika');
                         }
