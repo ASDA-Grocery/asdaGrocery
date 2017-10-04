@@ -361,6 +361,7 @@ app.post('/enquireOrder', function(req, res) {
           console.log('Mineral Value:', mineralValue)
           console.log('Mineral Type:', mineralType)
           console.log('Initial Mineral Type:', initialMineralType)
+          console.log('Mineral Content:', mineralContent)
           if(mineralValue === 'noMineralValue'){
             speech = 'No mineralValue context'
           }
@@ -371,7 +372,9 @@ app.post('/enquireOrder', function(req, res) {
               , totalProducts = productData.productList.length;
             productData.productList.forEach(function(element){
               if(mineralContent === 'low' || mineralContent === 'lower'){
+                console.log('element initial mineral type: ', element[initialMineralType])
                 if(element[initialMineralType] === mineralValue){
+                  console.log('inside if dsyfdysf')
                   if(element[mineralType] < contentLevel || contentLevel < 0){
                     contentLevel = element[mineralType]
                     productName = element.productName;
