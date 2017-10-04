@@ -501,7 +501,7 @@ app.post('/enquireOrder', function(req, res) {
                             responseToAPI(speech);
                         }
                         else if(sDate>noonDate){
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'                
+                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'                
                             responseToAPI(speech);
                         }
                         else{
@@ -512,7 +512,7 @@ app.post('/enquireOrder', function(req, res) {
                     else {
                          if(sDate<=noonDate){
                             console.log('2ND IF -- >');
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'                
                             responseToAPI(speech);
                         }
                         else if(sDate>noonDate){
@@ -520,7 +520,7 @@ app.post('/enquireOrder', function(req, res) {
                             responseToAPI(speech);
                         }
                         else{
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'                
                             responseToAPI(speech);
                         }
                     }
