@@ -456,16 +456,18 @@ app.post('/enquireOrder', function(req, res) {
                 } else {
                   console.log('Upcoming 10 events:');
                   for (var i = 0; i < 1; i++) {
-                    var event = events[i];
-                    var start = event.start.dateTime || event.start.date;
-                    var end = event.end.dateTime || event.end.date;
-                    var sDate = new Date(start);
-                    var eDate = new Date(end);
-                    summary = event.summary;
+                    var event = events[i]
+                      , start = event.start.dateTime || event.start.date
+                      , end = event.end.dateTime || event.end.date
+                      , sDate = new Date(start)
+                      , startTime = sDate.toLocaleTimeString()
+                      , eDate = new Date(end)
+                      , endTime = eDate.toLocaleTimeString()
+                      , summary = event.summary;
                     flag = true;
                     console.log(start, typeof(start), sDate.toLocaleTimeString(), eDate.toLocaleTimeString(),' - ',summary);
                     if(flag){
-                        speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                        speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
                         console.log('param - > ', req.body.result.parameters.postponeTime);
                         responseToAPI(speech);
