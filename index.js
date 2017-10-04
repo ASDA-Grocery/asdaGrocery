@@ -462,11 +462,12 @@ app.post('/enquireOrder', function(req, res) {
                       , sDate = new Date(start)
                       , getSHours = sDate.getHours() + 5
                       , istSDate = sDate.setHours(getSHours)
-                      , startDate = istSDate.toLocaleTimeString()
+//                       , startDate = istSDate.toLocaleTimeString()
                       , eDate = new Date(end)
                       , endTime = eDate.toLocaleTimeString()
                       , summary = event.summary;
                     flag = true;
+                    console.log('[x] - > ', sDate, getSHours, istSDate);
                     console.log('start test date - > ',startDate, typeof(startDate));
                     console.log(start, typeof(start),' - ',summary);
                     if(flag){
