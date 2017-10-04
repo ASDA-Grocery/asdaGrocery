@@ -81,7 +81,7 @@ app.post('/enquireOrder', function(req, res) {
         else if(intent === 'orderNo-status'){
           var orderNo = req.body.result.parameters.orderN ? parseInt(wordsToNumbers(req.body.result.parameters.orderN)) : 'noOrderNumber'
           if(orderNo === 'noOrderNumber'){
-            speech = 'Sorry! Not able to help you this time. Do you want me to help you with anythng else?'
+            speech = 'Sorry! Not able to help you this time. Do you want me to help you with anything else?'
           }
           else{
             var orderCounter = 0;
@@ -268,7 +268,7 @@ app.post('/enquireOrder', function(req, res) {
               else{
                 shoppingData.shoppingList[shoppingListName].status = 'active'
                 var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
-                speech = "Sure. '" + tempList +  "' shopping list has been put on active."
+                speech = "Sure. '" + tempList +  "' shopping list is now active."
               }
             }
           }
