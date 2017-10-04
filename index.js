@@ -463,7 +463,7 @@ app.post('/enquireOrder', function(req, res) {
                     var eDate = new Date(end);
                     summary = event.summary;
                     flag = true;
-                    console.log(start, typeof(start), sDate, sDate.getTime(),' - ',summary);
+                    console.log(start, typeof(start), sDate, sDate.getUTCHours(), sDate.getUTCMinutes,' - ',summary);
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30 AM to 1.30 PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
