@@ -474,7 +474,7 @@ app.post('/enquireOrder', function(req, res) {
                     noonDate.setSeconds(0);
                     noonDate.setMilliseconds(0);
                     console.log('check noon date _ > ', noonDate, typeof(noonDate),sDate, typeof(sDate),eDate);
-                    console.log('timestamp - > 'noonDate.getTime(), sDate.getTime());
+                    console.log('timestamp - > ', noonDate.getTime(), sDate.getTime());
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
