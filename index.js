@@ -449,7 +449,6 @@ app.post('/enquireOrder', function(req, res) {
                   return;
                 }
                 var events = response.items;
-                console.log('events - > ', events);
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
                   console.log('param - > ', req.body.result.parameters.postponeTime);
@@ -463,7 +462,6 @@ app.post('/enquireOrder', function(req, res) {
                       , end = event.end.dateTime || event.end.date  
                       , sDate = new Date(start)
                       , eDate = new Date(end)
-                      , endTime = eDate.toLocaleTimeString()
                       , summary = event.summary;
                     flag = true;
                     sDate.setHours(sDate.getHours()+5);
@@ -478,17 +476,19 @@ app.post('/enquireOrder', function(req, res) {
                     console.log('check noon date _ > ', noonDate,sDate,eDate);
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
-//                     if(req.body.result.contexts[index].parameters.timeSlabOccurance=='before'||req.body.result.contexts[index].parameters.timeSlab1=='noon'||req.body.result.contexts[index].parameters.timeSlab1=='morning'){
-//                         if(){
-                        
-//                         }
-//                     }
-                    if(flag){
-                        speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
-                        console.log('inside last if - > ',speech, intent);
-                        console.log('param - > ', req.body.result.parameters.postponeTime);
-                        responseToAPI(speech);
+                    if(req.body.result.contexts[index].parameters.timeSlabOccurance=='before'||req.body.result.contexts[index].parameters.timeSlab1=='noon'||req.body.result.contexts[index].parameters.timeSlab1=='morning'){
+                        if(startTime<=noonDate){
+                            console.log('inside the ifffffff -- >');
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            responseToAPI(speech);
+                        }
                     }
+//                     if(flag){
+//                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+//                         console.log('inside last if - > ',speech, intent);
+//                         console.log('param - > ', req.body.result.parameters.postponeTime);
+//                         responseToAPI(speech);
+//                     }
                   }
                 }
             });
