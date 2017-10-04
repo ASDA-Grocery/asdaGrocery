@@ -474,19 +474,20 @@ app.post('/enquireOrder', function(req, res) {
                     noonDate.setSeconds(0);
                     noonDate.setMilliseconds(0);
                     console.log('check noon date _ > ', noonDate, typeof(noonDate),sDate, typeof(sDate),eDate);
+                    console.log('timestamp - > 'noonDate.getTime(), sDate.getTime());
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
                         console.log('1ST IF -- > ');
-                        if(startTime<noonDate){
+                        if(startTime.getTime()<noonDate.getTime()){
                             console.log('2ND IF -- >');
                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                             responseToAPI(speech);
                         }
-                        else if(startTime>noonDate){
+                        else if(startTime.getTime()>noonDate.getTime()){
                              console.log('apdika   ');
                         }
-                        else if(startTime===noonDate){
+                        else if(startTime.getTime()===noonDate.getTime()){
                              console.log('hjhadjdfhfj   ');
                         }
                         else{
