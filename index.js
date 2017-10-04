@@ -465,13 +465,13 @@ app.post('/enquireOrder', function(req, res) {
                       , summary = event.summary;
                     flag = true;
                     sDate.setHours(sDate.getHours()+5);
-                    sDate.setMinutes(sDate.getMinutes()+30)
-                    console.log('typeof date from calendar api', typeof start)
-                    console.log('checking for to LAcale string', sDate.toLocaleTimeString())
-                    console.log('[x] - > ', sDate);
-                    console.log(start,' - ',summary);
+                    sDate.setMinutes(sDate.getMinutes()+30);
+                    eDate.setHours(sDate.getHours()+5);
+                    eDate.setMinutes(sDate.getMinutes()+30);
+                    var startTime = sDate.toLocaleTimeString()
+                      , endTime = eDate.toLocaleTimeString();
                     if(flag){
-                        speech = 'As per your Google Calendar, you have '+event.summary+' from 11.30AM to 12.30PM. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                        speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
                         console.log('param - > ', req.body.result.parameters.postponeTime);
                         responseToAPI(speech);
