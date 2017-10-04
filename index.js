@@ -465,15 +465,15 @@ app.post('/enquireOrder', function(req, res) {
                     flag = true;
                     sDate.setHours(sDate.getHours()+5);
                     sDate.setMinutes(sDate.getMinutes()+30);
-                    eDate.setHours(sDate.getHours()+5);
-                    eDate.setMinutes(sDate.getMinutes()+30);
+                    eDate.setHours(eDate.getHours()+5);
+                    eDate.setMinutes(eDate.getMinutes()+30);
                     var noonDate = new Date();
                     noonDate.setDate(noonDate.getDate()+1);
                     noonDate.setHours(12);
                     noonDate.setMinutes(0);
                     noonDate.setSeconds(0);
                     noonDate.setMilliseconds(0);
-                    console.log('check noon date _ > ', noonDate,sDate,eDate);
+                    console.log('check noon date _ > ', noonDate, typeof(noonDate),sDate, typeof(sDate),eDate);
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
