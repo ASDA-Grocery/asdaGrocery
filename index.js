@@ -460,12 +460,15 @@ app.post('/enquireOrder', function(req, res) {
                       , start = event.start.dateTime || event.start.date
                       , end = event.end.dateTime || event.end.date
                       , sDate = new Date(start)
-                      , startTime = sDate.toLocaleTimeString()
+                      , localeStartDate = sDate.toLocaleTimeString()
+                      , utcHours = localeStartDate.getHours()
+                      , istHours = utcsDate + 5
+                      , startTime = localeStartDate.setHours(istHours)
                       , eDate = new Date(end)
                       , endTime = eDate.toLocaleTimeString()
                       , summary = event.summary;
                     flag = true;
-                    console.log(start, typeof(start), sDate.toLocaleTimeString(), eDate.getHours(),' - ',summary);
+                    console.log(start, typeof(start), startTime, eDate.getHours(),' - ',summary);
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
