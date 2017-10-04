@@ -470,7 +470,8 @@ app.post('/enquireOrder', function(req, res) {
                     sDate.setMinutes(sDate.getMinutes()+30);
                     eDate.setHours(sDate.getHours()+5);
                     eDate.setMinutes(sDate.getMinutes()+30);
-                    var noonDate = new Date().setHours(12);
+                    var noonDate = new Date(); 
+                    noonDate.setHours(12);
                     console.log('check noon date _ > ', noonDate);
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
