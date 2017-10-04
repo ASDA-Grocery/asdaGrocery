@@ -459,7 +459,7 @@ app.post('/enquireOrder', function(req, res) {
                     var event = events[i]
                       , start = event.start.dateTime || event.start.date
                       , end = event.end.dateTime || event.end.date  
-                      , isodate = toISOString(start)
+                      , isodate = start.toISOString()
                       , sDate = new Date(start)
                       , eDate = new Date(end)
                       , endTime = eDate.toLocaleTimeString()
