@@ -430,10 +430,9 @@ app.post('/enquireOrder', function(req, res) {
         
 
         else if(intent === 'postponeDelivery'){
-            console.log('intent - > ', intent);
-            console.log('oauth - > ', oauth2Client);
             var start , end, summary = '';
             var flag = false;
+            var index = req.body.result.contexts.findIndex((x) => x.name === 'postponeDelivery')
             calendar.events.list({
                 auth: oauth2Client,
                 calendarId: 'primary',
@@ -468,8 +467,15 @@ app.post('/enquireOrder', function(req, res) {
                     sDate.setMinutes(sDate.getMinutes()+30);
                     eDate.setHours(sDate.getHours()+5);
                     eDate.setMinutes(sDate.getMinutes()+30);
+                    var noonDate = new Date().setHours(12);
+                    console.log('check noon date _ > ', noonDate);
                     var startTime = sDate.toLocaleTimeString()
                       , endTime = eDate.toLocaleTimeString();
+//                     if(req.body.result.contexts[index].parameters.timeSlabOccurance=='before'||req.body.result.contexts[index].parameters.timeSlab1=='noon'||req.body.result.contexts[index].parameters.timeSlab1=='morning'){
+//                         if(){
+                        
+//                         }
+//                     }
                     if(flag){
                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
                         console.log('inside last if - > ',speech, intent);
