@@ -94,6 +94,9 @@ app.post('/enquireOrder', function(req, res) {
                   var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
                   speech = 'It has left our store and will reach you in the next '
                             + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+                  if(orderNo === 2){
+                    speech = 'It is yet to be shipped but will reach you on time. Anything else I can help you with?'
+                  }
                   break;
                 }
               }
