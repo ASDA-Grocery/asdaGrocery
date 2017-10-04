@@ -178,7 +178,7 @@ app.post('/enquireOrder', function(req, res) {
                 var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
                 speech = "Sure. '" + tempList +  "' shopping list has been put on hold."
               }
-              else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart' || shoppingStatus === 'active'){
+              else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart' || shoppingStatus === 'active' || shoppingStatus === 'continue' || shoppingStatus === 'recommence'){
                 shoppingData.shoppingList[shoppingListName].status = 'active'
                 var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
                 var randomNum = Math.floor((Math.random() * 20)/2);
