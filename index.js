@@ -185,7 +185,7 @@ app.post('/enquireOrder', function(req, res) {
               else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart' || shoppingStatus === 'active' || shoppingStatus === 'continue' || shoppingStatus === 'recommence'){
                 shoppingData.shoppingList[shoppingListName].status = 'active'
                 var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1)
-                var randomNum = Math.floor((Math.random() * 20)/2);
+                var randomNum = 2;
                 //console.log('randomNum :',randomNum);
                 if(randomNum % 2 == 0){
                   console.log('Even');
