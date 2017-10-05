@@ -470,7 +470,7 @@ app.post('/enquireOrder', function(req, res) {
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
                   console.log('param - > ', req.body.result.parameters.postponeTime);
-                  speech = 'Your order delivery is postponed as per you requested!'
+                  speech = 'Your order will be delivered as per your request!'
                   responseToAPI(speech);
                 } else {
                   console.log('Upcoming 10 events:');
@@ -495,8 +495,8 @@ app.post('/enquireOrder', function(req, res) {
                     console.log('check noon date _ > ', noonDate, typeof(noonDate),sDate, typeof(sDate),eDate);
                     var sTime = sDate.toLocaleTimeString()
                       , eTime = eDate.toLocaleTimeString()
-                      , startTime = sTime.substring(0,4)+" "+sTime.substring(8)
-                      , endTime = eTime.substring(0,4)+" "+eTime.substring(8)
+                      , startTime = sTime.substring(0,5)+" "+sTime.substring(8)
+                      , endTime = eTime.substring(0,5)+" "+eTime.substring(8)
                     console.log('start time : ',startTime, startTime.length);
                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
                         console.log('1ST IF -- > ');
