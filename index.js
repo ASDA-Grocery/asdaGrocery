@@ -34,7 +34,8 @@ app.post('/enquireOrder', function(req, res) {
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
       , contexts =  req.body.result && req.body.result.contexts ? req.body.result.contexts : "noContexts"
       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
-
+    console.log('intent - > ', intent);
+    console.log('contexts - > ', contexts);
     if(accessToken === 'noAccessToken'){
         speech = 'Please Login to you google account';
          responseToAPI(speech);
@@ -492,8 +493,10 @@ app.post('/enquireOrder', function(req, res) {
                     noonDate.setSeconds(0);
                     noonDate.setMilliseconds(0);
                     console.log('check noon date _ > ', noonDate, typeof(noonDate),sDate, typeof(sDate),eDate);
-                    var startTime = sDate.toLocaleTimeString()
-                      , endTime = eDate.toLocaleTimeString();
+                    var sTime = sDate.toLocaleTimeString()
+                      , eTime = eDate.toLocaleTimeString()
+                      , startTime = sTime.substring(0,4)+" "+sTime.substring(8)
+                      , endTime = eTime.substring(0,4)+" "+eTime.substring(8)
                     console.log('start time : ',startTime, startTime.length);
                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
                         console.log('1ST IF -- > ');
