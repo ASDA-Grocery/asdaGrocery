@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 
-app.post('/enquireOrder', function(req, res) {  
-    
+app.post('/enquireOrder', function(req, res) {
+
     var speech = 'This is the default speech'
       , openCounter = 0
       , contextOut
@@ -47,7 +47,7 @@ app.post('/enquireOrder', function(req, res) {
         oauth2Client.setCredentials({
           access_token:accessToken
         });
-    
+
         if(intent === 'checkOrderStatus'){
           orderData.orderDb.forEach(function(element){
             if(element.status === 'open'){
@@ -71,8 +71,8 @@ app.post('/enquireOrder', function(req, res) {
             var tempCount = 1;
             orderData.orderDb.forEach(function(element){
               if(element.status === 'open'){
-                speech = speech + ' Order ' + tempCount + ' is for ' + element.value 
-                         + ' and it was placed on ' + element.orderPlacementDate + '.'                      
+                speech = speech + ' Order ' + tempCount + ' is for ' + element.value
+                         + ' and it was placed on ' + element.orderPlacementDate + '.'
                 tempCount++;
               }
             })
@@ -146,7 +146,7 @@ app.post('/enquireOrder', function(req, res) {
 
             if(orderCost.indexOf('£') == 0){
               orderCost =  orderCost.substr(2, orderCost.length)
-              orderCost = orderCost + ' £'         
+              orderCost = orderCost + ' £'
             }
 
             for(var i = 0; i < orderData.orderDb.length; i++){
@@ -252,7 +252,7 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
-        
+
         else if(intent === 'changeContextOrderStatus'){
           var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingListName'
           var shoppingStatus = req.body.result.parameters.recurStatus ? req.body.result.parameters.recurStatus : 'noShoppingStatus'
@@ -280,7 +280,7 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
-        
+
         else if(intent === 'findProducts'){
           var mineralContent = req.body.result.parameters.mineralContent ? req.body.result.parameters.mineralContent : 'noMineralContent'
           var mineralType = req.body.result.parameters.mineralType ? req.body.result.parameters.mineralType : 'noMineralType'
@@ -322,7 +322,7 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
-        
+
         else if(intent === 'optionsFindProduct'){
           var index = req.body.result.contexts.findIndex((x) => x.name === 'searchproduct')
           console.log('index ------> ',index);
@@ -350,7 +350,7 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
-        
+
         else if(intent === 'findSpecificContentProduct'){
           console.log('inside findSpecificContentProduct')
           console.log('checking contexts: ', req.body.result.contexts)
@@ -406,13 +406,13 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech);
         }
-        
+
         else if(intent === 'addToCart&Checkout'){
           var index = req.body.result.contexts.findIndex((x) => x.name === 'addproductcart')
           var number = req.body.result.parameters.number ? req.body.result.parameters.number : 'noNumberIntegerValue'
           var productName = req.body.result.contexts[index].parameters.productName ? req.body.result.contexts[index].parameters.productName : 'noProductName'
           var checkoutBool = req.body.result.contexts[index].parameters.checkout ? req.body.result.contexts[index].parameters.checkout : 'noCheckout'
-          
+
           if(checkoutBool === 'noCheckout' || checkoutBool === ''){
             var prodIndex = productData.productList.findIndex((x) => x.productName === productName)
             var product = {
@@ -436,7 +436,7 @@ app.post('/enquireOrder', function(req, res) {
           }
           responseToAPI(speech)
         }
-        
+
         else if(intent === 'checkoutAfterConfirmation'){
           var negativeConfirmation = req.body.result.parameters.negativeConfirmation ? req.body.result.parameters.negativeConfirmationr : 'noNegativeConfirmation'
           var positiveConfirmation = req.body.result.parameters.positiveConfirmation ? req.body.result.parameters.positiveConfirmation : 'noPositiveConfirmation'
@@ -446,14 +446,14 @@ app.post('/enquireOrder', function(req, res) {
           else{
             speech = 'Alright. Is there anything else I can help now?'
           }
-          responseToAPI(speech);  
+          responseToAPI(speech);
         }
-        
 
-        else if(intent === 'postponeDelivery'){
+
+        else if(intent === 'scheduleDelivery'){
             var start , end, summary = '';
             var flag = false;
-            var index = req.body.result.contexts.findIndex((x) => x.name === 'postponeDelivery')
+            var index = req.body.result.contexts.findIndex((x) => x.name === 'scheduleDelivery')
             calendar.events.list({
                 auth: oauth2Client,
                 calendarId: 'primary',
@@ -469,7 +469,7 @@ app.post('/enquireOrder', function(req, res) {
                 var events = response.items;
                 if (events.length == 0) {
                   console.log('No upcoming events found.');
-                  console.log('param - > ', req.body.result.parameters.postponeTime);
+                  console.log('param - > ', req.body.result.parameters.scheduleTime);
                   speech = 'Your order will be delivered as per your request!'
                   responseToAPI(speech);
                 } else {
@@ -477,7 +477,7 @@ app.post('/enquireOrder', function(req, res) {
                   for (var i = 0; i < 1; i++) {
                     var event = events[i]
                       , start = event.start.dateTime || event.start.date
-                      , end = event.end.dateTime || event.end.date  
+                      , end = event.end.dateTime || event.end.date
                       , sDate = new Date(start)
                       , eDate = new Date(end)
                       , summary = event.summary;
@@ -502,56 +502,56 @@ app.post('/enquireOrder', function(req, res) {
                         console.log('1ST IF -- > ');
                         if(sDate<=noonDate){
                             console.log('2ND IF -- >');
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                             responseToAPI(speech);
                         }
                         else if(sDate>noonDate){
-                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'                
+                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
                             responseToAPI(speech);
                         }
                         else{
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                             responseToAPI(speech);
                         }
                     }
                     else {
                          if(sDate<=noonDate){
                             console.log('2ND IF -- >');
-                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'                
+                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
                             responseToAPI(speech);
                         }
                         else if(sDate>noonDate){
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'                
+                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'
                             responseToAPI(speech);
                         }
                         else{
-                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'                
+                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
                             responseToAPI(speech);
                         }
                     }
 //                     if(flag){
-//                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'                
+//                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
 //                         console.log('inside last if - > ',speech, intent);
-//                         console.log('param - > ', req.body.result.parameters.postponeTime);
+//                         console.log('param - > ', req.body.result.parameters.scheduleTime);
 //                         responseToAPI(speech);
 //                     }
                   }
                 }
             });
-            
+
         }
-        
-        else if(intent === 'confirmDeliveryPostpone'){
-           var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmpostpone')
+
+        else if(intent === 'confirmDeliverySchedule'){
+           var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmschedule')
            var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingList'
-             , postponeTime = req.body.result.contexts[index].parameters.postponeTime ? req.body.result.contexts[index].parameters.postponeTime : 'noPostponeTime' ;
+             , scheduleTime = req.body.result.contexts[index].parameters.scheduleTime ? req.body.result.contexts[index].parameters.scheduleTime : 'noscheduleTime' ;
             console.log(' sdgugusdgu :', req.body.result)
-            console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.postponeTime);
-           if(shoppingListName === 'noShoppingList' || postponeTime === 'noPostponeTime'){
+            console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.scheduleTime);
+           if(shoppingListName === 'noShoppingList' || scheduleTime === 'noscheduleTime'){
               speech = 'Sorry, unable to understand the list name to be delivered';
            }
            else {
-              if(postponeTime === 'tomorrow' || postponeTime === 'Tomorrow'){
+              if(scheduleTime === 'tomorrow' || scheduleTime === 'Tomorrow'){
                 var list = shoppingData.shoppingList['weekly'];
                 var Id = (orderData.orderDb.length + 1).toString();
                 var date = new Date();
@@ -564,20 +564,20 @@ app.post('/enquireOrder', function(req, res) {
                     deliveryTime: date
                  };
                  orderData.orderDb.push(orderObj);
-                 console.log('new postponed order - > ', orderData.orderDb);
+                 console.log('new scheduled order - > ', orderData.orderDb);
                  speech = 'Your order has been placed successfully';
                }
             }
             responseToAPI(speech);
           }
-        
+
 
         else{
           speech = 'Sorry! Unable to Understand'
           responseToAPI(speech)
         }
     }
-    
+
     //var tempData = req.query;
     function responseToAPI(speech){
         return res.json({
@@ -587,7 +587,7 @@ app.post('/enquireOrder', function(req, res) {
             contextOut: contextOut
         });
     }
-    
+
 });
 
 app.listen((process.env.PORT || 8000), function() {
