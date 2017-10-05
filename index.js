@@ -441,7 +441,7 @@ app.post('/enquireOrder', function(req, res) {
           var negativeConfirmation = req.body.result.parameters.negativeConfirmation ? req.body.result.parameters.negativeConfirmationr : 'noNegativeConfirmation'
           var positiveConfirmation = req.body.result.parameters.positiveConfirmation ? req.body.result.parameters.positiveConfirmation : 'noPositiveConfirmation'
           if(negativeConfirmation === 'noNegativeConfirmation'){
-            speech = 'Sure. Checkout Done'
+            speech = 'Would you like to pick them up from your nearest store or should I place a delivery request?.'
           }
           else{
             speech = 'Alright. Is there anything else I can help now?'
