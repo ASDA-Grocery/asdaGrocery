@@ -568,11 +568,11 @@ app.post('/enquireOrder', function(req, res) {
 //           }
         
 
-//         else{
-//           speech = 'Sorry! Unable to Understand'
-//           responseToAPI(speech)
-//         }
-//     }
+        else{
+          speech = 'Sorry! Unable to Understand'
+          responseToAPI(speech)
+        }
+    }
     
     //var tempData = req.query;
     function responseToAPI(speech){
