@@ -548,7 +548,7 @@ app.post('/enquireOrder', function(req, res) {
             console.log(' sdgugusdgu :', req.body.result)
             console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.postponeTime);
            if(shoppingListName === 'noShoppingList' || postponeTime === 'noPostponeTime'){
-              speech = 'Sorry, unable to understand list name to be postponed';
+              speech = 'Sorry, unable to understand the list name to be delivered';
            }
            else {
               if(postponeTime === 'tomorrow' || postponeTime === 'Tomorrow'){
