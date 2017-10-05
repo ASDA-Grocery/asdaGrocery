@@ -104,6 +104,7 @@ app.post('/enquireOrder', function(req, res) {
           responseToAPI(speech);
         }
         else if(intent === 'orderDate-status'){
+          console.log('Checking by Date :', req.body.result.parameters)
           var orderDateDay = req.body.result.parameters.orderDateDay ? wordsToNumbers(req.body.result.parameters.orderDateDay) : 'noOrderDateDay'
           var orderDateMonth = req.body.result.parameters.orderDateMonth ? req.body.result.parameters.orderDateMonth : 'noOrderDateMonth'
           if(orderDateDay === 'noOrderDateDay' && orderDateMonth === 'noOrderDateMonth'){
