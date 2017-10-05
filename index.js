@@ -432,7 +432,7 @@ app.post('/enquireOrder', function(req, res) {
               quantity: number
             }
             shoppingData.shoppingList.cart.productList.push(product)
-            speech = number + ' ' + productName + ' added to the cart & checkout.'
+            speech = number + ' ' + productName + ' added to the cart. Would you like to pick them up from your nearest store or should I place a delivery request?.'
           }
           responseToAPI(speech)
         }
