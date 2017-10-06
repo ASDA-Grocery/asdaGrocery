@@ -480,7 +480,6 @@ app.post('/enquireOrder', function(req, res) {
                       , sDate = new Date(start)
                       , eDate = new Date(end)
                       , summary = event.summary;
-                    flag = true;
                     sDate.setHours(sDate.getHours()+5);
                     sDate.setMinutes(sDate.getMinutes()+30);
                     eDate.setHours(eDate.getHours()+5);
