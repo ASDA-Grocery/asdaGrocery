@@ -286,6 +286,7 @@ app.post('/enquireOrder', function(req, res) {
         }
 
         else if(intent === 'findProducts'){
+          console.log('Product List :', productData.productList)
           var mineralContent = req.body.result.parameters.mineralContent ? req.body.result.parameters.mineralContent : 'noMineralContent'
           var mineralType = req.body.result.parameters.mineralType ? req.body.result.parameters.mineralType : 'noMineralType'
           var productType = req.body.result.parameters.productType ? req.body.result.parameters.productType : 'noProductType'
