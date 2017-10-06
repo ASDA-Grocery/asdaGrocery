@@ -180,13 +180,13 @@ app.post('/enquireOrder', function(req, res) {
             else{
               if(shoppingStatus === 'hold' ||shoppingStatus === 'pause' || shoppingStatus === 'stop'){
                 shoppingData.shoppingList[shoppingListName].status = 'hold';
-                console.log('status of the list : ',shoppingData.shoppingList[shoppingListName].status);
+                console.log('status of the list : ',shoppingData.shoppingList[shoppingListName]);
                 var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1);
                 speech = "Sure. '" + tempList +  "' shopping list has been put on hold."
               }
               else if(shoppingStatus === 'resume' ||shoppingStatus === 'start' || shoppingStatus === 'restart' || shoppingStatus === 'active' || shoppingStatus === 'continue' || shoppingStatus === 'recommence'){
                 shoppingData.shoppingList[shoppingListName].status = 'active';
-                console.log('status of the list : ',shoppingData.shoppingList[shoppingListName].status);
+                console.log('status of the list : ',shoppingData.shoppingList[shoppingListName]);
                 var tempList = shoppingListName.charAt(0).toUpperCase() + shoppingListName.slice(1);
                 var randomNum = 2;
                 //console.log('randomNum :',randomNum);
