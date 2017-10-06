@@ -452,8 +452,6 @@ app.post('/enquireOrder', function(req, res) {
 
 
         else if(intent === 'scheduleDelivery'){
-            var start , end, summary = '';
-            var flag = false;
             var index = req.body.result.contexts.findIndex((x) => x.name === 'scheduleDelivery')
             calendar.events.list({
                 auth: oauth2Client,
@@ -474,7 +472,7 @@ app.post('/enquireOrder', function(req, res) {
                   speech = 'Your order will be delivered as per your request!'
                   responseToAPI(speech);
                 } else {
-                  console.log('Upcoming 10 events:');
+                  console.log('Upcoming  events: ',events);
                   for (var i = 0; i < 1; i++) {
                     var event = events[i]
                       , start = event.start.dateTime || event.start.date
@@ -493,16 +491,12 @@ app.post('/enquireOrder', function(req, res) {
                     noonDate.setMinutes(0);
                     noonDate.setSeconds(0);
                     noonDate.setMilliseconds(0);
-                    console.log('check noon date _ > ', noonDate, typeof(noonDate),sDate, typeof(sDate),eDate);
                     var sTime = sDate.toLocaleTimeString()
                       , eTime = eDate.toLocaleTimeString()
                       , startTime = sTime.substring(0,5)+" "+sTime.substring(8)
                       , endTime = eTime.substring(0,5)+" "+eTime.substring(8)
-                    console.log('start time : ',startTime, startTime.length);
                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
-                        console.log('1ST IF -- > ');
                         if(sDate<=noonDate){
-                            console.log('2ND IF -- >');
                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
                             responseToAPI(speech);
                         }
@@ -517,7 +511,6 @@ app.post('/enquireOrder', function(req, res) {
                     }
                     else {
                          if(sDate<=noonDate){
-                            console.log('2ND IF -- >');
                             speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
                             responseToAPI(speech);
                         }
@@ -530,12 +523,6 @@ app.post('/enquireOrder', function(req, res) {
                             responseToAPI(speech);
                         }
                     }
-//                     if(flag){
-//                         speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
-//                         console.log('inside last if - > ',speech, intent);
-//                         console.log('param - > ', req.body.result.parameters.scheduleTime);
-//                         responseToAPI(speech);
-//                     }
                   }
                 }
             });
