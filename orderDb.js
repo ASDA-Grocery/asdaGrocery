@@ -17,6 +17,7 @@ exports.orderDb = [
     orderPlacementDate: 'November 6, 2017',
     value: '20 £',
     status: 'closed',
+    shipped: 'false',
     deliveryTime: getOrderTime(30)
   },
   {
@@ -36,6 +37,7 @@ exports.orderDb = [
     orderPlacementDate: 'November 7, 2017',
     value: '35 £',
     status: 'closed',
+    shipped: 'false',
     deliveryTime: getOrderTime(40)
   },
   {
@@ -50,6 +52,7 @@ exports.orderDb = [
     orderPlacementDate: 'November 7, 2017',
     value: '15 £',
     status: 'closed',
+    shipped: 'false',
     deliveryTime: getOrderTime(25)
   },
   {
@@ -64,6 +67,7 @@ exports.orderDb = [
     orderPlacementDate: 'November 7, 2017',
     value: '40 £',
     status: 'open',
+    shipped: 'true',
     deliveryTime: getOrderTime(30)
   },
   {
@@ -88,6 +92,7 @@ exports.orderDb = [
     orderPlacementDate: 'November 7, 2017',
     value: '90 £',
     status: 'open',
+    shipped: 'false',
     deliveryTime: getOrderTime(50)
   }
 ]
