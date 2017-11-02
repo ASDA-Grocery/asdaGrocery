@@ -387,7 +387,7 @@ app.post('/enquireOrder', function(req, res) {
               , productName
               , totalProducts = productData.productList.length;
             productData.productList.forEach(function(element){
-              if(mineralContent === 'low' || mineralContent === 'lower'){
+              if(mineralContent === 'low' || mineralContent === 'lower' || mineralContent === 'lowest'){
                 console.log('element initial mineral type: ', element[initialMineralType])
                 console.log('typeof initial mineral value : ', typeof element[initialMineralType])
                 console.log('typeof mineral value : ', typeof mineralValue)
@@ -406,7 +406,7 @@ app.post('/enquireOrder', function(req, res) {
                   console.log('pongsdhfgsdyu')
                 }
               }
-              else if(mineralContent === 'high' || mineralContent === 'higher' || mineralContent === 'good'){
+              else if(mineralContent === 'high' || mineralContent === 'higher' || mineralContent === 'good' || mineralContent === 'highest'){
                 if(element[initialMineralType] === mineralValue){
                   if(contentLevel < 0 || element[mineralType] > contentLevel){
                     contentLevel = element[mineralType]
