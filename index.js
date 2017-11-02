@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 
 app.post('/enquireOrder', function(req, res) {
-
+    console.log('Inside enquire order')
     var speech = 'This is the default speech'
       , openCounter = 0
       , contextOut
