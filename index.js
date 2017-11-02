@@ -225,11 +225,12 @@ app.post('/enquireOrder', function(req, res) {
           responseToAPI(speech);
         }
 
-        else if(intent === 'updateShoppingList'){
+        else if(intent === 'updateShoppingList'){            
+          var index = req.body.result.contexts.findIndex((x) => x.name === 'updateorders')
           console.log('prrrrrroduct quantity -> ', req.body.result.parameters.productQuantity)
-          console.log('list nameeee -> ', req.body.result.contexts[0].parameters)
+          console.log('list nameeee -> ', req.body.result.contexts[index].parameters)
           var productQuantity = req.body.result.parameters.productQuantity ? parseInt(wordsToNumbers(req.body.result.parameters.productQuantity))  : 'noProductQuantity'
-          var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingListName'
+          var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingListName'
           if(productQuantity === 'noProductQuantity' || shoppingListName === 'noShoppingListName'){
             speech = 'Sorry! Please provide proper Product Quantity and Shopping List Name'
           }
