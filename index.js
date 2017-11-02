@@ -227,7 +227,7 @@ app.post('/enquireOrder', function(req, res) {
 
         else if(intent === 'updateShoppingList'){
           console.log('prrrrrroduct quantity -> ', req.body.result.parameters.productQuantity)
-          console.log('list nameeee -> ', req.body.result.contexts[0].parameters.recurTime)
+          console.log('list nameeee -> ', req.body.result.contexts[0].parameters)
           var productQuantity = req.body.result.parameters.productQuantity ? parseInt(wordsToNumbers(req.body.result.parameters.productQuantity))  : 'noProductQuantity'
           var shoppingListName = req.body.result.contexts[0].parameters.recurTime ? req.body.result.contexts[0].parameters.recurTime : 'noShoppingListName'
           if(productQuantity === 'noProductQuantity' || shoppingListName === 'noShoppingListName'){
