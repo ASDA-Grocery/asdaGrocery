@@ -14,7 +14,7 @@ exports.orderDb = [
         quantity: '2'
       }
     ],
-    orderPlacementDate: 'November 6, 2017',
+    orderPlacementDate: 'November 5, 2017',
     value: '20 £',
     status: 'closed',
     shipped: 'false',
@@ -34,7 +34,7 @@ exports.orderDb = [
         quantity: '1'
       }
     ],
-    orderPlacementDate: 'November 7, 2017',
+    orderPlacementDate: 'November 6, 2017',
     value: '35 £',
     status: 'closed',
     shipped: 'false',
@@ -64,7 +64,7 @@ exports.orderDb = [
         quantity: '4'
       }
     ],
-    orderPlacementDate: 'November 7, 2017',
+    orderPlacementDate: 'November 8, 2017',
     value: '40 £',
     status: 'open',
     shipped: 'true',
@@ -89,7 +89,7 @@ exports.orderDb = [
         quantity: '5'
       }
     ],
-    orderPlacementDate: 'November 7, 2017',
+    orderPlacementDate: 'November 9, 2017',
     value: '90 £',
     status: 'open',
     shipped: 'false',
