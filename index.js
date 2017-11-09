@@ -93,8 +93,9 @@ app.post('/enquireOrder', function(req, res) {
                 orderCounter++;
                 if(orderCounter == orderNo){
                   var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
-                  speech = 'It has left our store and will reach you in the next '
-                            + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+//                   speech = 'It has left our store and will reach you in the next '
+//                             + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+                     speech = 'Your order has been shipped and will reach you by 9 PM today. Would you like me to help you with anything else?'
                   if(orderData.orderDb[i].shipped === 'false'){
                     speech = 'It is yet to be shipped but will reach you on time. Anything else I can help you with?'
                   }
@@ -119,8 +120,9 @@ app.post('/enquireOrder', function(req, res) {
               var tempOrderDateMonth = orderDateMonth.toLowerCase()
               if((tempOrderPlacementDate.indexOf(tempOrderDateDay) !== -1) && (tempOrderPlacementDate.indexOf(tempOrderDateMonth) !== -1)){
                 var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
-                speech = 'It has left our store and will reach you in the next '
-                          + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+//              speech = 'It has left our store and will reach you in the next '
+//                       + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+                speech = 'Your order has been shipped and will reach you by 9 PM today. Would you like me to help you with anything else?'
                 if(orderData.orderDb[i].shipped === 'false'){
                   speech = 'It is yet to be shipped but will reach you on time. Anything else I can help you with?'
                 }
@@ -156,8 +158,9 @@ app.post('/enquireOrder', function(req, res) {
             for(var i = 0; i < orderData.orderDb.length; i++){
               if(orderData.orderDb[i].value === orderCost){
                 var deliveryTimeRem = (orderData.orderDb[i].deliveryTime - new Date())/60000;
-                speech = 'It has left our store and will reach you in the next '
-                          + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+//              speech = 'It has left our store and will reach you in the next '
+//                       + Math.ceil(deliveryTimeRem) + ' minutes . Would you like me to help you with anything else?'
+                speech = 'Your order has been shipped and will reach you by 9 PM today. Would you like me to help you with anything else?'
                 if(orderData.orderDb[i].shipped === 'false'){
                   speech = 'It is yet to be shipped but will reach you on time. Anything else I can help you with?'
                 }
