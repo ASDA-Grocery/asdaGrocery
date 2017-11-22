@@ -561,7 +561,7 @@ app.post('/enquireOrder', function(req, res) {
                 var orderObj = {
                     orderId: 'OR10000'+Id,
                     productList: list.productList,
-                    orderPlacementDate: 'June 23, 2017',
+                    orderPlacementDate: 'November 22, 2017',
                     value: '20 £',
                     status: 'closed',
                     deliveryTime: date
