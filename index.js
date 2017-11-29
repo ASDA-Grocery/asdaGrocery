@@ -32,21 +32,21 @@ app.post('/enquireOrder', function(req, res) {
       , openCounter = 0
       , contextOut
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
-      , contexts =  req.body.result && req.body.result.contexts ? req.body.result.contexts : "noContexts"
-      , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
+      , contexts =  req.body.result && req.body.result.contexts ? req.body.result.contexts : "noContexts";
+//       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('intent - > ', intent);
     console.log('contexts - > ', contexts);
-    if(accessToken === 'noAccessToken'){
-        speech = 'Please Login to you google account';
-         responseToAPI(speech);
-    }
-//     if(1 == 2){
+//     if(accessToken === 'noAccessToken'){
 //         speech = 'Please Login to you google account';
+//          responseToAPI(speech);
 //     }
+    if(1 == 2){
+        speech = 'Please Login to you google account';
+    }
     else {
-        oauth2Client.setCredentials({
-          access_token:accessToken
-        });
+//         oauth2Client.setCredentials({
+//           access_token:accessToken
+//         });
 
         if(intent === 'checkOrderStatus'){
           console.log('Order Database :', orderData.orderDb);
@@ -424,7 +424,8 @@ app.post('/enquireOrder', function(req, res) {
           responseToAPI(speech);
         }
 
-        else if(intent === 'addToCart&Checkout'){
+//         else if(intent === 'addToCart&Checkout'){
+          else if(intent === 'addtocartAndCheckout'){
           var index = req.body.result.contexts.findIndex((x) => x.name === 'addproductcart')
           var number = req.body.result.parameters.number ? req.body.result.parameters.number : 'noNumberIntegerValue'
           var productName = req.body.result.contexts[index].parameters.productName ? req.body.result.contexts[index].parameters.productName : 'noProductName'
@@ -467,112 +468,112 @@ app.post('/enquireOrder', function(req, res) {
         }
 
 
-        else if(intent === 'scheduleDelivery'){
-            var index = req.body.result.contexts.findIndex((x) => x.name === 'scheduleDelivery')
-            calendar.events.list({
-                auth: oauth2Client,
-                calendarId: 'primary',
-                timeMin: (new Date()).toISOString(),
-                maxResults: 10,
-                singleEvents: true,
-                orderBy: 'startTime'
-            }, function(err, response) {
-                if (err) {
-                  console.log('The Calendar API returned an error: ' + err);
-                  return;
-                }
-                var events = response.items;
-                if (events.length == 0) {
-                  console.log('No upcoming events found.');
-                  console.log('param - > ', req.body.result.parameters.scheduleTime);
-                  speech = 'Your order will be delivered as per your request!'
-                  responseToAPI(speech);
-                } else {
-                  console.log('Upcoming  events: ',events);
-                  for (var i = 0; i < 1; i++) {
-                    var event = events[i]
-                      , start = event.start.dateTime || event.start.date
-                      , end = event.end.dateTime || event.end.date
-                      , sDate = new Date(start)
-                      , eDate = new Date(end)
-                      , summary = event.summary;
-                    sDate.setHours(sDate.getHours()+5);
-                    sDate.setMinutes(sDate.getMinutes()+30);
-                    eDate.setHours(eDate.getHours()+5);
-                    eDate.setMinutes(eDate.getMinutes()+30);
-                    var noonDate = new Date();
-                    noonDate.setDate(noonDate.getDate()+1);
-                    noonDate.setHours(12);
-                    noonDate.setMinutes(0);
-                    noonDate.setSeconds(0);
-                    noonDate.setMilliseconds(0);
-                    var sTime = sDate.toLocaleTimeString()
-                      , eTime = eDate.toLocaleTimeString()
-                      , startTime = sTime.substring(0,5)+" "+sTime.substring(8)
-                      , endTime = eTime.substring(0,5)+" "+eTime.substring(8)
-                    if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
-                        if(sDate<=noonDate){
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
-                            responseToAPI(speech);
-                        }
-                        else if(sDate>noonDate){
-                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
-                            responseToAPI(speech);
-                        }
-                        else{
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
-                            responseToAPI(speech);
-                        }
-                    }
-                    else {
-                         if(sDate<=noonDate){
-                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
-                            responseToAPI(speech);
-                        }
-                        else if(sDate>noonDate){
-                            speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'
-                            responseToAPI(speech);
-                        }
-                        else{
-                            speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
-                            responseToAPI(speech);
-                        }
-                    }
-                  }
-                }
-            });
+//         else if(intent === 'scheduleDelivery'){
+//             var index = req.body.result.contexts.findIndex((x) => x.name === 'scheduleDelivery')
+//             calendar.events.list({
+//                 auth: oauth2Client,
+//                 calendarId: 'primary',
+//                 timeMin: (new Date()).toISOString(),
+//                 maxResults: 10,
+//                 singleEvents: true,
+//                 orderBy: 'startTime'
+//             }, function(err, response) {
+//                 if (err) {
+//                   console.log('The Calendar API returned an error: ' + err);
+//                   return;
+//                 }
+//                 var events = response.items;
+//                 if (events.length == 0) {
+//                   console.log('No upcoming events found.');
+//                   console.log('param - > ', req.body.result.parameters.scheduleTime);
+//                   speech = 'Your order will be delivered as per your request!'
+//                   responseToAPI(speech);
+//                 } else {
+//                   console.log('Upcoming  events: ',events);
+//                   for (var i = 0; i < 1; i++) {
+//                     var event = events[i]
+//                       , start = event.start.dateTime || event.start.date
+//                       , end = event.end.dateTime || event.end.date
+//                       , sDate = new Date(start)
+//                       , eDate = new Date(end)
+//                       , summary = event.summary;
+//                     sDate.setHours(sDate.getHours()+5);
+//                     sDate.setMinutes(sDate.getMinutes()+30);
+//                     eDate.setHours(eDate.getHours()+5);
+//                     eDate.setMinutes(eDate.getMinutes()+30);
+//                     var noonDate = new Date();
+//                     noonDate.setDate(noonDate.getDate()+1);
+//                     noonDate.setHours(12);
+//                     noonDate.setMinutes(0);
+//                     noonDate.setSeconds(0);
+//                     noonDate.setMilliseconds(0);
+//                     var sTime = sDate.toLocaleTimeString()
+//                       , eTime = eDate.toLocaleTimeString()
+//                       , startTime = sTime.substring(0,5)+" "+sTime.substring(8)
+//                       , endTime = eTime.substring(0,5)+" "+eTime.substring(8)
+//                     if(req.body.result.parameters.timeSlabOccurance=='before'||req.body.result.parameters.timeSlab1=='noon'||req.body.result.parameters.timeSlab1=='morning'){
+//                         if(sDate<=noonDate){
+//                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
+//                             responseToAPI(speech);
+//                         }
+//                         else if(sDate>noonDate){
+//                             speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
+//                             responseToAPI(speech);
+//                         }
+//                         else{
+//                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 9 AM?'
+//                             responseToAPI(speech);
+//                         }
+//                     }
+//                     else {
+//                          if(sDate<=noonDate){
+//                             speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
+//                             responseToAPI(speech);
+//                         }
+//                         else if(sDate>noonDate){
+//                             speech = 'As per your Google Calendar, you have '+event.summary+' from '+startTime+' to '+endTime+'. Would you like to pay 3 Pounds extra for guaranteed delivery by tomorrow 12 noon?'
+//                             responseToAPI(speech);
+//                         }
+//                         else{
+//                             speech = 'Are you sure you want your shopping list delivered by tomorrow 3 PM?'
+//                             responseToAPI(speech);
+//                         }
+//                     }
+//                   }
+//                 }
+//             });
 
-        }
+//         }
 
-        else if(intent === 'confirmDeliverySchedule'){
-           var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmschedule')
-           var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingList'
-             , scheduleTime = req.body.result.contexts[index].parameters.scheduleTime ? req.body.result.contexts[index].parameters.scheduleTime : 'noscheduleTime' ;
-            console.log(' sdgugusdgu :', req.body.result)
-            console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.scheduleTime);
-           if(shoppingListName === 'noShoppingList' || scheduleTime === 'noscheduleTime'){
-              speech = 'Sorry, unable to understand the list name to be delivered';
-           }
-           else {
-              if(scheduleTime === 'tomorrow' || scheduleTime === 'Tomorrow'){
-                var list = shoppingData.shoppingList['weekly'];
-                var Id = (orderData.orderDb.length + 1).toString();
-                var date = new Date();
-                var orderObj = {
-                    orderId: 'OR10000'+Id,
-                    productList: list.productList,
-                    orderPlacementDate: 'November 22, 2017',
-                    value: '20 £',
-                    status: 'closed',
-                    deliveryTime: date
-                 };
-                 orderData.orderDb.push(orderObj);
-                 console.log('new scheduled order - > ', orderData.orderDb);
-                 speech = 'Your order has been placed successfully';
-               }
-            }
-            responseToAPI(speech);
-          }
+//         else if(intent === 'confirmDeliverySchedule'){
+//            var index = req.body.result.contexts.findIndex((x) => x.name === 'confirmschedule')
+//            var shoppingListName = req.body.result.contexts[index].parameters.recurTime ? req.body.result.contexts[index].parameters.recurTime : 'noShoppingList'
+//              , scheduleTime = req.body.result.contexts[index].parameters.scheduleTime ? req.body.result.contexts[index].parameters.scheduleTime : 'noscheduleTime' ;
+//             console.log(' sdgugusdgu :', req.body.result)
+//             console.log(' - > ',req.body.result.contexts[index].parameters.recurTime, req.body.result.contexts[index].parameters.scheduleTime);
+//            if(shoppingListName === 'noShoppingList' || scheduleTime === 'noscheduleTime'){
+//               speech = 'Sorry, unable to understand the list name to be delivered';
+//            }
+//            else {
+//               if(scheduleTime === 'tomorrow' || scheduleTime === 'Tomorrow'){
+//                 var list = shoppingData.shoppingList['weekly'];
+//                 var Id = (orderData.orderDb.length + 1).toString();
+//                 var date = new Date();
+//                 var orderObj = {
+//                     orderId: 'OR10000'+Id,
+//                     productList: list.productList,
+//                     orderPlacementDate: 'November 22, 2017',
+//                     value: '20 £',
+//                     status: 'closed',
+//                     deliveryTime: date
+//                  };
+//                  orderData.orderDb.push(orderObj);
+//                  console.log('new scheduled order - > ', orderData.orderDb);
+//                  speech = 'Your order has been placed successfully';
+//                }
+//             }
+//             responseToAPI(speech);
+//           }
 
 
         else{
