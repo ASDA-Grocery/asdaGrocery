@@ -32,7 +32,7 @@ app.post('/enquireOrder', function(req, res) {
       , openCounter = 0
       , contextOut
       , intent = req.body.result && req.body.result.metadata.intentName ? req.body.result.metadata.intentName : "noIntent"
-      , contexts =  req.body.result && req.body.result.contexts ? req.body.result.contexts : "noContexts";
+      , contexts =  req.body.result && req.body.result.contexts ? req.body.result.contexts : "noContexts"
       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('intent - > ', intent);
     console.log('contexts - > ', contexts);
