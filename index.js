@@ -36,7 +36,7 @@ app.post('/enquireOrder', function(req, res) {
       , accessToken = req.body.originalRequest.data.user.accessToken ? req.body.originalRequest.data.user.accessToken : 'noAccessToken';
     console.log('userId - > ',req.body.originalRequest.data.user)
     console.log('intent - > ', intent);
-    console.log('contexts - > ', contexts);
+//     console.log('contexts - > ', contexts);
     if(accessToken === 'noAccessToken'){
         speech = 'Please Login to you google account';
          responseToAPI(speech);
